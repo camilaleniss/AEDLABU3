@@ -1,6 +1,6 @@
 package model;
 
-public class NodeBinaryTree<T> implements Comparable{
+public class NodeBinaryTree<T extends Comparable<T>> implements Comparable<NodeBinaryTree<T>>{
 
 	private T value;
 	private NodeBinaryTree<T> parent;
@@ -27,6 +27,7 @@ public class NodeBinaryTree<T> implements Comparable{
 
 	public void setRight(NodeBinaryTree<T> right) {
 		this.right = right;
+		right.parent = this;
 	}
 
 	public NodeBinaryTree<T> getLeft() {
@@ -35,6 +36,7 @@ public class NodeBinaryTree<T> implements Comparable{
 
 	public void setLeft(NodeBinaryTree<T> left) {
 		this.left = left;
+		left.parent = this;
 	}
 
 	public boolean isLeaf() {
@@ -42,10 +44,9 @@ public class NodeBinaryTree<T> implements Comparable{
 	}
 
 	//REVISAR ESTE MÉTODO
-	public int compareTo(Object arg0) {
-		NodeBinaryTree node = (NodeBinaryTree) arg0;
-		int v = (Integer) node.getValue();
-		return (Integer)value-v;
+	public int compareTo(NodeBinaryTree<T> node) {
+		T value = node.getValue();
+		return value == null ? 1 : this.getValue().compareTo(value);
 	}
 	
 	public void addNode (T node) {
@@ -69,7 +70,7 @@ public class NodeBinaryTree<T> implements Comparable{
 			return (T) this;
 		if (isLeaf())
 			return null;
-		if (compareTo(value)>=0)
+		if (this.value.compareTo(value)>=0)
 			return (left!=null) ? left.searchValue(value) : null;
 		else
 			return (right!=null) ? right.searchValue(value) : null;	
