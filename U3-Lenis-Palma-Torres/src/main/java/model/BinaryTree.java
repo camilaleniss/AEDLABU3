@@ -1,23 +1,31 @@
 package model;
 
-public class BinaryTree<T> implements IBinaryTree<T> {
+public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K,V> {
+	
+	private NodeBinaryTree<K, V> root;
 
-	public void addNode(T node) {
+	public void insert(K key, V value) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public NodeBinaryTree<T> deleteNode(T node) {
+	public V delete(K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public NodeBinaryTree<T> searchNode(T node) {
-		// TODO Auto-generated method stub
-		return null;
+	public V search(K key) {
+		NodeBinaryTree<K, V> node = search(root, key);
+		return node == null? null : node.getValue();
 	}
 
-
+	private NodeBinaryTree<K, V> search(NodeBinaryTree<K, V> node, K key) {
+		if (node==null || key== node.getKey())
+				return node;
+		if(key.compareTo(node.getKey()) < 0)
+			return search(node.getLeft(), key);
+		return search(node.getRight(), key);
+	}
 	
 
 }

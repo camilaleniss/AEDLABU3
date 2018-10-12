@@ -1,96 +1,107 @@
 package model;
 
-public class NodeBinaryTree<T extends Comparable<T>> implements Comparable<NodeBinaryTree<T>>{
+public class NodeBinaryTree<K extends Comparable<K>, V>{
 
-	private T value;
-	private NodeBinaryTree<T> parent;
-	private NodeBinaryTree<T> left;
-	private NodeBinaryTree<T> right;
+	private K key;
+	private V value;
+	private NodeBinaryTree<K, V> parent;
+	private NodeBinaryTree<K, V> left;
+	private NodeBinaryTree<K, V> right;
 	
-	public 	NodeBinaryTree(T value) {
+	public 	NodeBinaryTree(K key, V value) {
+		this.key = key;
 		this.value = value;
 		left=null;
 		right=null;
+		parent = null;
 	}
 	
-	public T getValue() {
+	public K getKey() {
+		return key;
+	}
+
+	public void setKey(K key) {
+		this.key = key;
+	}
+
+	public V getValue() {
 		return value;
 	}
-	
-	public void setValue(T value) {
-		this.value=value;
+
+	public void setValue(V value) {
+		this.value = value;
 	}
 
-	public NodeBinaryTree<T> getRight() {
-		return right;
+	public NodeBinaryTree<K, V> getParent() {
+		return parent;
 	}
 
-	public void setRight(NodeBinaryTree<T> right) {
-		this.right = right;
-		right.parent = this;
+	public void setParent(NodeBinaryTree<K, V> parent) {
+		this.parent = parent;
 	}
 
-	public NodeBinaryTree<T> getLeft() {
+	public NodeBinaryTree<K, V> getLeft() {
 		return left;
 	}
 
-	public void setLeft(NodeBinaryTree<T> left) {
+	public void setLeft(NodeBinaryTree<K, V> left) {
 		this.left = left;
-		left.parent = this;
+	}
+
+	public NodeBinaryTree<K, V> getRight() {
+		return right;
+	}
+
+	public void setRight(NodeBinaryTree<K, V> right) {
+		this.right = right;
 	}
 
 	public boolean isLeaf() {
 		return (left==null && right==null);
 	}
-
-	//REVISAR ESTE MÉTODO
-	public int compareTo(NodeBinaryTree<T> node) {
-		T value = node.getValue();
-		return value == null ? 1 : this.getValue().compareTo(value);
-	}
 	
-	public void addNode (T node) {
-		NodeBinaryTree<T> toAdd = new NodeBinaryTree<T>(node);
-		if (compareTo(toAdd)>=0) {
-			if (left == null)
-				left = toAdd;
-			else
-				left.addNode(node);
-		}else {
-			if (right==null)
-				right = toAdd;
-			else
-				right.addNode(node);
-		}
-	}
+//	public void add(T node) {
+//		NodeBinaryTree<T> toAdd = new NodeBinaryTree<T>(node);
+//		if (compareTo(toAdd)>=0) {
+//			if (left == null)
+//				left = toAdd;
+//			else
+//				left.addNode(node);
+//		}else {
+//			if (right==null)
+//				right = toAdd;
+//			else
+//				right.addNode(node);
+//		}
+//	}
 	
-	public T searchValue(T value) {
-		if (this.value == value) 
-			//VER ESTO
-			return (T) this;
-		if (isLeaf())
-			return null;
-		if (this.value.compareTo(value)>=0)
-			return (left!=null) ? left.searchValue(value) : null;
-		else
-			return (right!=null) ? right.searchValue(value) : null;	
-	}
+//	public V search(K key) {
+//		if (this.value == value) 
+//			//VER ESTO
+//			return (T) this;
+//		if (isLeaf())
+//			return null;
+//		if (this.value.compareTo(value)>=0)
+//			return (left!=null) ? left.searchValue(value) : null;
+//		else
+//			return (right!=null) ? right.searchValue(value) : null;	
+//	}
 	
-	public T delete(T value) {
-		//Falta implementarlo
-		return value;
-	}
-	
-	public T findMin() {
-		return (T) ((left==null) ? this : left.findMin());
-	}
-	
-	public T findMax() {
-		return (T) ((right==null) ? this : right.findMin());
-	}
-	
-	public T findSuccesor() {
-		return (T) this;
-	}
+//	public T delete(T value) {
+//		//Falta implementarlo
+//		return value;
+//	}
+//	
+//	public T findMin() {
+//		return (T) ((left==null) ? this : left.findMin());
+//	}
+//	
+//	public T findMax() {
+//		return (T) ((right==null) ? this : right.findMin());
+//	}
+//	
+//	public T findSuccesor() {
+//		return (T) this;
+//	}
 	
 }

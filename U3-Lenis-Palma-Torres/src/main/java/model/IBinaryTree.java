@@ -1,11 +1,11 @@
 package model;
 
-public interface IBinaryTree<T> {
+public interface IBinaryTree<K extends Comparable<K>, V> {
 
-	public void addNode(T node);
+	public void insert(K key, V value);
 	
-	public NodeBinaryTree<T> deleteNode(T node);
+	public V delete(K key);
 	
-	public NodeBinaryTree<T> searchNode(T node);
+	public V search(K key);
 	
 }
