@@ -3,6 +3,10 @@ package model;
 public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V> {
 
 	private NodeBinaryTree<K, V> root;
+	
+	public BinaryTree() {
+		root = null;
+	}
 
 	public V search(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
