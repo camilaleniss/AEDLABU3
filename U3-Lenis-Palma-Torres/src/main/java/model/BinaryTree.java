@@ -91,7 +91,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		NodeBinaryTree<K, V> x = root;
 		while (x != null) {
 			y = x;
-			if (z.getKey().compareTo(x.getKey()) < 0)
+			if (z.getKey().compareTo(x.getKey()) <= 0)
 				x = x.getLeft();
 			else
 				x = x.getRight();
@@ -99,7 +99,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		z.setParent(y);
 		if (y == null)
 			root = z;
-		else if (z.getKey().compareTo(y.getKey()) < 0)
+		else if (z.getKey().compareTo(y.getKey()) <= 0)
 			y.setLeft(z);
 		else
 			y.setRight(z);
