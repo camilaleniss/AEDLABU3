@@ -8,6 +8,10 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		root = null;
 	}
 
+	public NodeBinaryTree<K, V> getRoot(){
+		return root;
+	}
+	
 	public V search(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
 		return node == null ? null : node.getValue();
@@ -131,7 +135,18 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			z.setValue(y.getValue());
 		}
 		return y;
-
+	}
+	
+	public int getWeight() {
+		if (root!=null)
+			return getWeight(root);
+		return 0;
+	}
+	
+	public int getWeight(NodeBinaryTree<K,V> x){
+		int l = (x.getLeft()!=null) ? getWeight(x.getLeft()): 0;
+		int r = (x.getRight()!=null) ? getWeight(x.getRight()): 0;
+		return l+r+1;
 	}
 
 }
