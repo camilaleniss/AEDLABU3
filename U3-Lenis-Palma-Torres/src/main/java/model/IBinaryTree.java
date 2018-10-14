@@ -8,4 +8,14 @@ public interface IBinaryTree<K extends Comparable<K>, V> {
 	
 	public V search(K key);
 	
+	public boolean isInTree(K key);
+	
+	public K getMin();
+		
+	public K getMax();
+	
+	
+	public K getPredecessor(K key);
+	
+	public K getSuccessor(K key);
 }
