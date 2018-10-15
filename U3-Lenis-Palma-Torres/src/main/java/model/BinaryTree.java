@@ -2,7 +2,7 @@ package model;
 
 public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V> {
 
-	private NodeBinaryTree<K, V> root;
+	protected NodeBinaryTree<K, V> root;
 	
 	public BinaryTree() {
 		root = null;
@@ -99,7 +99,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		insert(node);
 	}
 
-	private void insert(NodeBinaryTree<K, V> z) {
+	protected void insert(NodeBinaryTree<K, V> z) {
 		NodeBinaryTree<K, V> y = null;
 		NodeBinaryTree<K, V> x = root;
 		while (x != null) {
@@ -124,7 +124,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return node != null ? delete(node).getValue() : null;
 	}
 
-	private NodeBinaryTree<K, V> delete(NodeBinaryTree<K, V> z) {
+	protected NodeBinaryTree<K, V> delete(NodeBinaryTree<K, V> z) {
 		NodeBinaryTree<K, V> x = null;
 		NodeBinaryTree<K, V> y = null;
 		if (z.getLeft() == null || z.getRight() == null)
