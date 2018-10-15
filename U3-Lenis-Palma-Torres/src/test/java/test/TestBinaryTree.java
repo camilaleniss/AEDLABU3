@@ -78,5 +78,10 @@ class TestBinaryTree {
 		assertTrue(ABB.getRoot().getLeft().getLeft().getValue()==5);
 		assertTrue(ABB.getRoot().getLeft().getLeft().getParent().getValue()==2);
 	}
+	
+	@Test
+	void testSearch() {
+		
+	}
 
 }

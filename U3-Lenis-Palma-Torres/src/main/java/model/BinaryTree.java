@@ -12,25 +12,6 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return root;
 	}
 	
-	public V search(K key) {
-		NodeBinaryTree<K, V> node = search(root, key);
-		return node == null ? null : node.getValue();
-	}
-
-	public boolean isInTree(K key) {
-		return search(root, key) != null;
-	}
-
-	private NodeBinaryTree<K, V> search(NodeBinaryTree<K, V> node, K key) {
-		if (key == null)
-			return null;
-		if (node == null || key.equals(node.getKey()))
-			return node;
-		if (key.compareTo(node.getKey()) < 0)
-			return search(node.getLeft(), key);
-		return search(node.getRight(), key);
-	}
-
 	public K getMin() {
 		return root == null ? null : getMin(root).getKey();
 	}
@@ -50,6 +31,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			return x;
 		return getMin(x.getRight());
 	}
+	
 
 	public K getPredecessor(K key) {
 		return search(root, key) != null ? getPredecessor(search(root, key)).getKey() : null;
@@ -79,6 +61,37 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			y = y.getParent();
 		}
 		return y;
+	}
+	
+	public int getWeight() {
+		if (root!=null)
+			return getWeight(root);
+		return 0;
+	}
+	
+	public int getWeight(NodeBinaryTree<K,V> x){
+		int l = (x.getLeft()!=null) ? getWeight(x.getLeft()): 0;
+		int r = (x.getRight()!=null) ? getWeight(x.getRight()): 0;
+		return l+r+1;
+	}
+	
+	public V search(K key) {
+		NodeBinaryTree<K, V> node = search(root, key);
+		return node == null ? null : node.getValue();
+	}
+
+	public boolean isInTree(K key) {
+		return search(root, key) != null;
+	}
+
+	private NodeBinaryTree<K, V> search(NodeBinaryTree<K, V> node, K key) {
+		if (key == null)
+			return null;
+		if (node == null || key.equals(node.getKey()))
+			return node;
+		if (key.compareTo(node.getKey()) < 0)
+			return search(node.getLeft(), key);
+		return search(node.getRight(), key);
 	}
 
 	public void insert(K key, V value) {
@@ -137,16 +150,5 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return y;
 	}
 	
-	public int getWeight() {
-		if (root!=null)
-			return getWeight(root);
-		return 0;
-	}
 	
-	public int getWeight(NodeBinaryTree<K,V> x){
-		int l = (x.getLeft()!=null) ? getWeight(x.getLeft()): 0;
-		int r = (x.getRight()!=null) ? getWeight(x.getRight()): 0;
-		return l+r+1;
-	}
-
 }
