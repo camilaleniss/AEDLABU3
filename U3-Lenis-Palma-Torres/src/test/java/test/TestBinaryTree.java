@@ -1,6 +1,8 @@
 package test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import model.BinaryTree;
@@ -82,6 +84,22 @@ class TestBinaryTree {
 	@Test
 	void testSearch() {
 		
+	}
+	
+	@Test
+	void testSearchEqualTo() {
+		ABB.insert(5, 1);
+		ABB.insert(10, 2);
+		ABB.insert(5, 3);
+		ABB.insert(15, 4);
+		ABB.insert(5, 5);
+		ABB.insert(6, 5);
+		
+		ArrayList<Integer> array = ABB.searchEqualTo(5);
+		assertTrue(array.get(0)==1);
+		assertTrue(array.get(1)==3);
+		assertTrue(array.get(2)==5);
+		assertTrue(array.size()==3);
 	}
 
 }

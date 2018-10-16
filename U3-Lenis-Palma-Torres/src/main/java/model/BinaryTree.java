@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V> {
 
 	protected NodeBinaryTree<K, V> root;
@@ -148,6 +150,39 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			z.setValue(y.getValue());
 		}
 		return y;
+	}
+	
+	public ArrayList<V> searchEqualTo (K key){
+		ArrayList<V> array = new ArrayList<V>();
+		if(isInTree(key)) {
+			NodeBinaryTree<K,V> node =search(root, key);
+			while(node!=null && node.getKey()==key) {
+				array.add(node.getValue());
+				node=getPredecessor(node);
+			}
+		}
+		return array;
+	}
+	
+	//REVISAR
+	public ArrayList<V> searchLowerOrEqualTo (K key){
+		ArrayList<V> array = new ArrayList<V>();
+		NodeBinaryTree<K,V> node =searchLowerOrEqualTo(root, key);
+		if(node!=null) {
+			while(node!=null && node.getKey().compareTo(key)<=0) {
+				array.add(node.getValue());
+				node=getSuccessor(node);
+			}
+		}
+		return array;
+	}
+	
+	private NodeBinaryTree<K,V> searchLowerOrEqualTo(NodeBinaryTree<K,V > node, K key){
+		if (key == null)
+			return null;
+		if (node == null || key.compareTo(node.getKey())<=0)
+			return node;
+		return search(node.getLeft(), key);
 	}
 	
 	
