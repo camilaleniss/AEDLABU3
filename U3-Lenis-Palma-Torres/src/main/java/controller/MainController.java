@@ -1,19 +1,21 @@
 package controller;
 
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Button;
 
 public class MainController {
 
     @FXML
-    private MenuButton nabuconodosor;
+    private Button butInsert;
 
     @FXML
-    void maria(ActionEvent event) {
-System.out.println("sdf");
-    }
+    private Button butModify;
+
+    @FXML
+    private Button butDelete;
+
+    @FXML
+    private Button butSearch;
 
 }
 
