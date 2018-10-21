@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import model.RBTree;
 
-class RBTreeTest {
+class TestRBTree {
 
-	private RBTree<Integer, Integer> rb;
+private RBTree<Integer, Integer> rb;
 	
-	RBTreeTest(){
+	TestRBTree(){
 		rb = new RBTree<>();
 	}
 	
@@ -49,7 +49,7 @@ class RBTreeTest {
 		assertTrue(!rb.getRoot().getLeft().getLeft().isBlack());
 		assertTrue(rb.getRoot().getLeft().getLeft().getKey()==4);
 		assertTrue(!rb.getRoot().getLeft().getRight().isBlack());
-		assertTrue(rb.getRoot().getLeft().getLeft().getKey()==5);
+		assertTrue(rb.getRoot().getLeft().getRight().getKey()==5);
 	}
-
+	
 }

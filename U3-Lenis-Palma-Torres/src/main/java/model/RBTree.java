@@ -106,6 +106,8 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			y.setLeft(z);
 		else
 			y.setRight(z);
+		
+		insertFixup(z);
 
 	}
 
