@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 	private RBNode<K, V> root;
@@ -322,6 +324,70 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			x.getParent().setLeft(y);
 		y.setRight(x); // put x on y’s right
 		x.setParent(y);
+	}
+	
+	public ArrayList<V> searchEqualTo(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+		if (isInTree(key)) {
+			RBNode<K, V> node = search(root, key);
+			while (node != null && node.getKey() == key) {
+				array.add(node.getValue());
+				node = getPredecessor(node);
+			}
+		}
+		return array;
+	}
+
+	public ArrayList<V> searchLowerOrEqualTo(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		RBNode<K, V> node = getMin(root);
+
+		while (node != null && node.getKey().compareTo(key) <= 0) {
+			array.add(node.getValue());
+			node = getSuccessor(node);
+		}
+
+		return array;
+	}
+
+	public ArrayList<V> searchLowerTo(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		RBNode<K, V> node = getMin(root);
+
+		while (node != null && node.getKey().compareTo(key) < 0) {
+			array.add(node.getValue());
+			node = getSuccessor(node);
+		}
+
+		return array;
+	}
+	
+	public ArrayList<V> searchBiggerOrEqualThan(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		RBNode<K, V> node = getMax(root);
+
+		while (node != null && node.getKey().compareTo(key) >= 0) {
+			array.add(node.getValue());
+			node = getPredecessor(node);
+		}
+
+		return array;
+	}
+	
+	public ArrayList<V> searchBiggerThan(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		RBNode<K, V> node = getMax(root);
+
+		while (node != null && node.getKey().compareTo(key) > 0) {
+			array.add(node.getValue());
+			node = getPredecessor(node);
+		}
+
+		return array;
 	}
 
 }

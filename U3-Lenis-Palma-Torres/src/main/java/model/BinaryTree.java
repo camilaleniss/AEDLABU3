@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V> {
 
 	protected NodeBinaryTree<K, V> root;
-	
+
 	public BinaryTree() {
 		root = null;
 	}
 
-	public NodeBinaryTree<K, V> getRoot(){
+	public NodeBinaryTree<K, V> getRoot() {
 		return root;
 	}
-	
+
 	public K getMin() {
 		return root == null ? null : getMin(root).getKey();
 	}
@@ -33,7 +33,6 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			return x;
 		return getMin(x.getRight());
 	}
-	
 
 	public K getPredecessor(K key) {
 		return search(root, key) != null ? getPredecessor(search(root, key)).getKey() : null;
@@ -64,19 +63,19 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		}
 		return y;
 	}
-	
+
 	public int getWeight() {
-		if (root!=null)
+		if (root != null)
 			return getWeight(root);
 		return 0;
 	}
-	
-	public int getWeight(NodeBinaryTree<K,V> x){
-		int l = (x.getLeft()!=null) ? getWeight(x.getLeft()): 0;
-		int r = (x.getRight()!=null) ? getWeight(x.getRight()): 0;
-		return l+r+1;
+
+	public int getWeight(NodeBinaryTree<K, V> x) {
+		int l = (x.getLeft() != null) ? getWeight(x.getLeft()) : 0;
+		int r = (x.getRight() != null) ? getWeight(x.getRight()) : 0;
+		return l + r + 1;
 	}
-	
+
 	public V search(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
 		return node == null ? null : node.getValue();
@@ -151,39 +150,69 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		}
 		return y;
 	}
-	
-	public ArrayList<V> searchEqualTo (K key){
+
+	public ArrayList<V> searchEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
-		if(isInTree(key)) {
-			NodeBinaryTree<K,V> node =search(root, key);
-			while(node!=null && node.getKey()==key) {
+		if (isInTree(key)) {
+			NodeBinaryTree<K, V> node = search(root, key);
+			while (node != null && node.getKey() == key) {
 				array.add(node.getValue());
-				node=getPredecessor(node);
+				node = getPredecessor(node);
 			}
 		}
 		return array;
 	}
-	
-	//REVISAR
-	public ArrayList<V> searchLowerOrEqualTo (K key){
+
+	public ArrayList<V> searchLowerOrEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
-		NodeBinaryTree<K,V> node =searchLowerOrEqualTo(root, key);
-		if(node!=null) {
-			while(node!=null && node.getKey().compareTo(key)<=0) {
-				array.add(node.getValue());
-				node=getSuccessor(node);
-			}
+
+		NodeBinaryTree<K, V> node = getMin(root);
+
+		while (node != null && node.getKey().compareTo(key) <= 0) {
+			array.add(node.getValue());
+			node = getSuccessor(node);
 		}
+
+		return array;
+	}
+
+	public ArrayList<V> searchLowerTo(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		NodeBinaryTree<K, V> node = getMin(root);
+
+		while (node != null && node.getKey().compareTo(key) < 0) {
+			array.add(node.getValue());
+			node = getSuccessor(node);
+		}
+
 		return array;
 	}
 	
-	private NodeBinaryTree<K,V> searchLowerOrEqualTo(NodeBinaryTree<K,V > node, K key){
-		if (key == null)
-			return null;
-		if (node == null || key.compareTo(node.getKey())<=0)
-			return node;
-		return search(node.getLeft(), key);
+	public ArrayList<V> searchBiggerOrEqualThan(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		NodeBinaryTree<K, V> node = getMax(root);
+
+		while (node != null && node.getKey().compareTo(key) >= 0) {
+			array.add(node.getValue());
+			node = getPredecessor(node);
+		}
+
+		return array;
 	}
 	
-	
+	public ArrayList<V> searchBiggerThan(K key) {
+		ArrayList<V> array = new ArrayList<V>();
+
+		NodeBinaryTree<K, V> node = getMax(root);
+
+		while (node != null && node.getKey().compareTo(key) > 0) {
+			array.add(node.getValue());
+			node = getPredecessor(node);
+		}
+
+		return array;
+	}
+
 }
