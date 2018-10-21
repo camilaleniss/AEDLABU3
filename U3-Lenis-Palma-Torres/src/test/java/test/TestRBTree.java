@@ -20,13 +20,15 @@ private RBTree<Integer, Integer> rb;
 	}
 	
 	void setUpStage2() {
+		//Construct the tree but It does not matter about the parents
+		rb = new RBTree<>();
 		RBNode<Integer, Integer> node = new RBNode<>(7,4, rb.getNIL());
 		node.setBlack(true);
 		RBNode<Integer, Integer> nodeaux= new RBNode<> (5,5, rb.getNIL());
 		node.setLeft(nodeaux);
 		nodeaux = new RBNode<>(8,6, rb.getNIL());
 		node.setRight(nodeaux);
-		nodeaux= node;
+		nodeaux= node; 
 		node = new RBNode<>(2,2, rb.getNIL());
 		node.setRight(nodeaux);
 		nodeaux= new RBNode<>(1,3, rb.getNIL());
@@ -34,15 +36,32 @@ private RBTree<Integer, Integer> rb;
 		node.setLeft(nodeaux);
 		nodeaux=node;
 		node = new RBNode<>(11,1, rb.getNIL());
+		node.setBlack(true);
 		node.setLeft(nodeaux);
 		nodeaux= new RBNode<>(14,7, rb.getNIL());
 		nodeaux.setBlack(true);
 		node.setRight(nodeaux);
 		node.getRight().setRight(new RBNode<>(15,8, rb.getNIL()));
+		//SET PARENTS
+		nodeaux= rb.getNIL();
+		node.setParent(nodeaux);
+		nodeaux= node;
+		node.getLeft().setParent(nodeaux);
+		node.getRight().setParent(nodeaux);
+		nodeaux=node.getRight();
+		node.getRight().getRight().setParent(nodeaux);
+		nodeaux=node.getLeft();
+		node.getLeft().getLeft().setParent(nodeaux);
+		node.getLeft().getRight().setParent(nodeaux);
+		nodeaux=node.getLeft().getRight();
+		node.getLeft().getRight().getLeft().setParent(nodeaux);
+		node.getLeft().getRight().getRight().setParent(nodeaux);
+		//Insert the tree
 		rb.setRoot(node);
 	}
 	
 	void setUpStage3() {
+		rb = new RBTree<>();
 		RBNode<Integer, Integer> node = new RBNode<>(14, 7, rb.getNIL());
 		RBNode<Integer, Integer> nodeaux = new RBNode<>(13, 9, rb.getNIL());
 		nodeaux.setBlack(true);
@@ -73,6 +92,7 @@ private RBTree<Integer, Integer> rb;
 	}
 	
 	void setUpStage4() {
+		rb = new RBTree<>();
 		RBNode<Integer, Integer> node = new RBNode<>(32, 1, rb.getNIL());
 		node.setBlack(true);
 		RBNode<Integer, Integer> nodeaux = new RBNode<>(21, 2, rb.getNIL());
@@ -123,6 +143,34 @@ private RBTree<Integer, Integer> rb;
 		assertTrue(rb.getRoot().getLeft().getLeft().getKey()==4);
 		assertTrue(!rb.getRoot().getLeft().getRight().isBlack());
 		assertTrue(rb.getRoot().getLeft().getRight().getKey()==5);
+	}
+	
+	@Test
+	void testDelete() {
+		//Test 1
+		assertTrue(rb.delete(10)==null);
+		
+		//Test 2
+		setUpStage1();
+		assertTrue(rb.delete(10)==1);
+		assertTrue(rb.getRoot().getKey()==null);
+		
+		//Test 3
+		setUpStage2();
+		assertTrue(rb.delete(5)==5);
+		assertTrue(rb.getRoot().getLeft().getRight().getLeft()==rb.getNIL());
+		assertTrue(rb.getRoot().isBlack());
+		assertTrue(!rb.getRoot().getLeft().isBlack());
+		assertTrue(rb.getRoot().getLeft().getLeft().isBlack());
+		assertTrue(rb.getRoot().getLeft().getRight().isBlack());
+		assertTrue(!rb.getRoot().getLeft().getRight().getRight().isBlack());
+		assertTrue(rb.getRoot().getRight().isBlack());
+		assertTrue(!rb.getRoot().getRight().getRight().isBlack());
+		
+		//Test 3
+		setUpStage3();
+		assertTrue(rb.delete(4)==8);
+		
 	}
 	
 }

@@ -161,8 +161,9 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 	public V delete(K key) {
 		RBNode<K, V> node = search(root, key);
 		if (node != nil) {
+			V value = node.getValue();
 			delete(node);
-			return node.getValue();
+			return value;
 		}
 		return null;
 	}
@@ -171,6 +172,30 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> y = z;
 		RBNode<K, V> x = nil;
 		boolean yOriginalColor = y.isBlack();
+		
+		if (z.getLeft() == nil || z.getRight() == nil)
+			y = z;
+		else
+			y = getSuccessor(z);
+		if (y.getLeft() != nil)
+			x = y.getLeft();
+		else
+			x = y.getRight();
+		//	x.setParent(y.getParent());t
+		//if (x != nil)
+			x.setParent(y.getParent());
+		if (y.getParent() == nil)
+			root = x;
+		else if (y == y.getParent().getLeft())
+			y.getParent().setLeft(x);
+		else
+			y.getParent().setRight(x);
+		if (y != z) {
+			z.setKey(y.getKey());
+			z.setValue(y.getValue());
+		}
+		
+		/*
 		if (z.getLeft() == nil) {
 			x = z.getRight();
 			transplant(z, z.getRight());
@@ -192,7 +217,8 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			y.setLeft(z.getLeft());
 			y.getLeft().setParent(y);
 			y.setBlack(z.isBlack());
-		}
+		}*/
+		
 		if(yOriginalColor) {
 			deleteFixup(x);
 		}
