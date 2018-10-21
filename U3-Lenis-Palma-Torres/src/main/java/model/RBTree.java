@@ -173,8 +173,9 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 	private void delete(RBNode<K, V> z) {
 		RBNode<K, V> y = z;
 		RBNode<K, V> x = nil;
-		boolean yOriginalColor = y.isBlack();
-		/*
+//		boolean yOriginalColor = y.isBlack();
+		
+		
 		if (z.getLeft() == nil || z.getRight() == nil)
 			y = z;
 		else
@@ -183,46 +184,50 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			x = y.getLeft();
 		else
 			x = y.getRight();
-		//	x.setParent(y.getParent());t
-		//if (x != nil)
-			x.setParent(y.getParent());
+		x.setParent(y.getParent());
+		
 		if (y.getParent() == nil)
 			root = x;
-		else if (y == y.getParent().getLeft())
-			y.getParent().setLeft(x);
-		else
-			y.getParent().setRight(x);
+		else {
+			if (y == y.getParent().getLeft())
+				y.getParent().setLeft(x);
+			else
+				y.getParent().setRight(x);
+		}
+			
 		if (y != z) {
 			z.setKey(y.getKey());
 			z.setValue(y.getValue());
-		}*/
-		
-		
-		if (z.getLeft() == nil) {
-			x = z.getRight();
-			transplant(z, z.getRight());
-		} else if (z.getRight() == nil) {
-			x = z.getLeft();
-			transplant(z, z.getLeft());
-		} else {
-			y = getMin(z.getRight());
-			yOriginalColor = y.isBlack();
-			x = y.getRight();
-			if(y.getParent() == z)
-				x.setParent(y);
-			else {
-				transplant(y, y.getRight());
-				y.setRight(z.getRight());
-				y.getRight().setParent(y);
-			}
-			transplant(z, y);
-			y.setLeft(z.getLeft());
-			y.getLeft().setParent(y);
-			y.setBlack(z.isBlack());
 		}
-		if(yOriginalColor) {
+		if(y.isBlack())
 			deleteFixup(x);
-		}
+		
+		
+//		if (z.getLeft() == nil) {
+//			x = z.getRight();
+//			transplant(z, z.getRight());
+//		} else if (z.getRight() == nil) {
+//			x = z.getLeft();
+//			transplant(z, z.getLeft());
+//		} else {
+//			y = getMin(z.getRight());
+//			yOriginalColor = y.isBlack();
+//			x = y.getRight();
+//			if(y.getParent() == z)
+//				x.setParent(y);
+//			else {
+//				transplant(y, y.getRight());
+//				y.setRight(z.getRight());
+//				y.getRight().setParent(y);
+//			}
+//			transplant(z, y);
+//			y.setLeft(z.getLeft());
+//			y.getLeft().setParent(y);
+//			y.setBlack(z.isBlack());
+//		}
+//		if(yOriginalColor) {
+//			deleteFixup(x);
+//		}
 	}
 
 	private void deleteFixup(RBNode<K, V> x) {
