@@ -168,8 +168,8 @@ private RBTree<Integer, Integer> rb;
 		assertTrue(!rb.getRoot().getRight().getRight().isBlack());
 		
 		//Test 3
-		setUpStage3();
-		assertTrue(rb.delete(4)==8);
+		setUpStage2();
+		assertTrue(rb.delete(7)==4);
 		
 	}
 	

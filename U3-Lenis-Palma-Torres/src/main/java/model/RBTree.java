@@ -172,7 +172,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> y = z;
 		RBNode<K, V> x = nil;
 		boolean yOriginalColor = y.isBlack();
-		
+		/*
 		if (z.getLeft() == nil || z.getRight() == nil)
 			y = z;
 		else
@@ -193,9 +193,9 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		if (y != z) {
 			z.setKey(y.getKey());
 			z.setValue(y.getValue());
-		}
+		}*/
 		
-		/*
+		
 		if (z.getLeft() == nil) {
 			x = z.getRight();
 			transplant(z, z.getRight());
@@ -217,12 +217,10 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			y.setLeft(z.getLeft());
 			y.getLeft().setParent(y);
 			y.setBlack(z.isBlack());
-		}*/
-		
+		}
 		if(yOriginalColor) {
 			deleteFixup(x);
 		}
-
 	}
 
 	private void deleteFixup(RBNode<K, V> x) {
