@@ -14,6 +14,14 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 	public RBNode<K,V> getRoot(){
 		return root;
 	}
+	
+	public void setRoot(RBNode<K,V> root) {
+		this.root=root;
+	}
+	
+	public RBNode<K,V> getNIL(){
+		return nil;
+	}
 
 	public V search(K key) {
 		RBNode<K, V> node = search(root, key);
