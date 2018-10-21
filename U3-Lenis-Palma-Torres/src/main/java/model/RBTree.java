@@ -10,6 +10,10 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		nil.setBlack(true);
 		root = nil;
 	}
+	
+	public RBNode<K,V> getRoot(){
+		return root;
+	}
 
 	public V search(K key) {
 		RBNode<K, V> node = search(root, key);
