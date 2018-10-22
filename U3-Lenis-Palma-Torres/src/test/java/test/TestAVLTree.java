@@ -53,7 +53,7 @@ class TestAVLTree {
 		assertTrue(AVL.getRoot().getRight().getKey()==46);
 		//Test 3
 		AVL.delete(46);
-		assertTrue(AVL.getRoot().getKey()==15);
+		assertTrue(AVL.getRoot().getKey()==12);
 		assertTrue(AVL.getRoot().getRight().getKey()==40);
 		
 	}
