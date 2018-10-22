@@ -7,7 +7,7 @@ import java.net.URL;
 public class FIBA {
 
 	public static final int NUMBER_OF_PLAYERS = 0;
-	
+
 	public static final int LESS = 0;
 	public static final int LESS_EQUAL = 1;
 	public static final int EQUAL = 2;
@@ -47,15 +47,14 @@ public class FIBA {
 			if (max.exists()) {
 				br = new BufferedReader(new FileReader(max));
 				maxNum = Integer.parseInt(br.readLine());
-				
-				System.out.println("listo");
+
 			} else {
 				maxNum = 1;
 				updateMaxNum();
 				File players = new File(getClass().getResource("/info/nba_season_data.csv").getFile());
 				createPlayers(players);
 			}
-			
+
 			createTrees();
 
 		} catch (IOException e) {
@@ -68,29 +67,28 @@ public class FIBA {
 		loadSurnames();
 		createRandomPlayers();
 
-		
 	}
 
 	private void createTrees() {
 		for (int i = 1; i < maxNum; i++) {
 			File player = new File("db" + File.separator + "players" + File.separator + i + ".txt");
-			if(player.exists()) {
+			if (player.exists()) {
 				try {
 					BufferedReader br = new BufferedReader(new FileReader(player));
 					String line = br.readLine();
 
 					String[] info = line.split(",");
 
-					rpgBST.insert(Double.parseDouble(info[12]), player.toString());
-					rpgRBT.insert(Double.parseDouble(info[12]), player.toString());
+					rpgBST.insert(Double.parseDouble(info[Player.RPG]), player.toString());
+					rpgRBT.insert(Double.parseDouble(info[Player.RPG]), player.toString());
 
-					apgRBT.insert(Double.parseDouble(info[13]), player.toString());
+					apgRBT.insert(Double.parseDouble(info[Player.APG]), player.toString());
 
-					spgBST.insert(Double.parseDouble(info[14]), player.toString());
-					spgAVL.insert(Double.parseDouble(info[14]), player.toString());
+					spgBST.insert(Double.parseDouble(info[Player.SPG]), player.toString());
+					spgAVL.insert(Double.parseDouble(info[Player.SPG]), player.toString());
 
-					rpgBST.insert(Double.parseDouble(info[15]), player.toString());
-					
+					bpgAVL.insert(Double.parseDouble(info[Player.BPG]), player.toString());
+
 					br.close();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -101,7 +99,7 @@ public class FIBA {
 				}
 			}
 		}
-		
+
 	}
 
 	public void loadNames() {
@@ -186,6 +184,81 @@ public class FIBA {
 			e.printStackTrace();
 		}
 
+	}
+
+	public ArrayList<Player> search(int item, double key, int criteria, boolean efficient) {
+		ArrayList<Player> players = new ArrayList<Player>();
+		IBinaryTree<Double, String> tree;
+		switch (item) {
+		case Player.RPG:
+			tree = efficient ? rpgRBT : rpgBST;
+			break;
+		case Player.APG:
+			tree = apgRBT;
+			break;
+		case Player.SPG:
+			tree = efficient ? spgAVL : spgBST;
+			break;
+		case Player.BPG:
+			tree = bpgAVL;
+			break;
+		default:
+			tree = efficient ? rpgRBT : rpgBST;
+			break;
+		}
+
+		ArrayList<String> locations = new ArrayList<String>();
+
+		switch (criteria) {
+		case LESS:
+			locations = tree.searchLowerTo(key);
+			break;
+		case LESS_EQUAL:
+			locations = tree.searchLowerOrEqualTo(key);
+			break;
+		case EQUAL:
+			locations = tree.searchEqualTo(key);
+			break;
+		case BIGGER_EQUAL:
+			locations = tree.searchBiggerOrEqualThan(key);
+			break;
+		case BIGGER:
+			locations = tree.searchBiggerThan(key);
+			break;
+		default:
+			locations = tree.searchEqualTo(key);
+			break;
+		}
+		
+		for (int i = 0; i < locations.size(); i++) {
+			players.add(createPlayer(locations.get(i)));
+		}
+
+		return players;
+	}
+
+	public Player createPlayer(String location) {
+		File file = new File(location);
+		Player p = null;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line = br.readLine();
+			br.close();
+			String[] info = line.split(",");
+			p = new Player(file, info[Player.NAME], Integer.parseInt(info[Player.AGE]), info[Player.TEAM],
+					Double.parseDouble(info[Player.PPG]), Double.parseDouble(info[Player.RPG]),
+					Double.parseDouble(info[Player.APG]), Double.parseDouble(info[Player.SPG]),
+					Double.parseDouble(info[Player.BPG]));
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return p;
 	}
 
 	public void createPlayers(File players) {
