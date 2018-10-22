@@ -15,8 +15,8 @@ public class Main extends Application{
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("FIBA");
-
 		primaryStage.show();
+		
 	}
 	
 	public static void main(String[] args) {

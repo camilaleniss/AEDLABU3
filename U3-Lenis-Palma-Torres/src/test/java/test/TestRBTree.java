@@ -171,6 +171,7 @@ private RBTree<Integer, Integer> rb;
 		setUpStage2();
 		assertTrue(rb.delete(7)==4);
 		
+		
 	}
 	
 }

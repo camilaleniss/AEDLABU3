@@ -32,3 +32,4 @@ public class MainView {
     private JFXButton butSearch1;
 
 }
+
