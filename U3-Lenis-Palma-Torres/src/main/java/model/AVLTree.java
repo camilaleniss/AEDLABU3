@@ -63,13 +63,13 @@ public class AVLTree<K extends Comparable<K>, V> extends BinaryTree<K, V> {
 	}
 
 	@Override
-	protected void insert(NodeBinaryTree<K, V> z) {
+	public void insert(NodeBinaryTree<K, V> z) {
 		super.insert(z);
 		rebalance(z);
 	}
 
 	@Override
-	protected NodeBinaryTree<K, V> delete(NodeBinaryTree<K, V> z) {
+	public NodeBinaryTree<K, V> delete(NodeBinaryTree<K, V> z) {
 		NodeBinaryTree<K, V> node = super.delete(z);
 		rebalance(node.getParent());
 		return node;
