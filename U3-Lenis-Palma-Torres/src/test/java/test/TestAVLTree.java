@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import model.AVLTree;
+import model.NodeBinaryTree;
 
 class TestAVLTree {
 	private AVLTree<Integer,Integer> AVL;
@@ -15,41 +16,42 @@ class TestAVLTree {
 	@Test
 	void testInsert() {
 		setup1();
-		AVL.insert(30,1);
+		//Test 1
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(30,1));
 		assertTrue(AVL.getRoot().getKey()==30);
-		
-		AVL.insert(15,2);
-		AVL.insert(40,3);
+		//Test 2
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(15,2));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(40,3));
 		assertTrue(AVL.getRoot().getLeft().getKey()==15);
 		assertTrue(AVL.getRoot().getRight().getKey()==40);
-		
-		AVL.insert(45,19);
-		AVL.insert(46,19);
+		//Test 3
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(45,19));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(46,19));
 		assertTrue(AVL.getRoot().getRight().getLeft().getKey()==40);
 		assertTrue(AVL.getRoot().getRight().getRight().getKey()==46);
-		
-		AVL.insert(12,1);
-		AVL.insert(7,2);
+		//Test 4
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(12,1));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(7,2));
 		assertTrue(AVL.getRoot().getLeft().getLeft().getKey()==7);
 		assertTrue(AVL.getRoot().getLeft().getRight().getKey()==15);
 	}
 	
 	void testDelete() {
 		setup1();
-		AVL.insert(30,1);
-		AVL.insert(15,2);
-		AVL.insert(40,3);
-		AVL.insert(45,19);
-		AVL.insert(46,19);
-		AVL.insert(12,1);
-		AVL.insert(7,2);
-		
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(30,1));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(15,2));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(40,3));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(45,19));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(46,19));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(12,1));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(7,2));
+		//Test 1
 		AVL.delete(30);
 		assertTrue(AVL.getRoot().getKey()==40);
-		
+		//Test 2
 		AVL.delete(45);
 		assertTrue(AVL.getRoot().getRight().getKey()==46);
-		
+		//Test 3
 		AVL.delete(46);
 		assertTrue(AVL.getRoot().getKey()==15);
 		assertTrue(AVL.getRoot().getRight().getKey()==40);
