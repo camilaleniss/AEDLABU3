@@ -33,5 +33,27 @@ class TestAVLTree {
 		assertTrue(AVL.getRoot().getLeft().getLeft().getKey()==7);
 		assertTrue(AVL.getRoot().getLeft().getRight().getKey()==15);
 	}
+	
+	void testDelete() {
+		setup1();
+		AVL.insert(30,1);
+		AVL.insert(15,2);
+		AVL.insert(40,3);
+		AVL.insert(45,19);
+		AVL.insert(46,19);
+		AVL.insert(12,1);
+		AVL.insert(7,2);
+		
+		AVL.delete(30);
+		assertTrue(AVL.getRoot().getKey()==40);
+		
+		AVL.delete(45);
+		assertTrue(AVL.getRoot().getRight().getKey()==46);
+		
+		AVL.delete(46);
+		assertTrue(AVL.getRoot().getKey()==15);
+		assertTrue(AVL.getRoot().getRight().getKey()==40);
+		
+	}
 
 }
