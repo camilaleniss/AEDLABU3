@@ -26,11 +26,13 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return nil;
 	}
 
+	@Override
 	public V search(K key) {
 		RBNode<K, V> node = search(root, key);
 		return node == nil ? null : node.getValue();
 	}
 
+	@Override
 	public boolean isInTree(K key) {
 		return search(root, key) != nil;
 	}
@@ -45,6 +47,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return search(node.getRight(), key);
 	}
 
+	@Override
 	public K getMin() {
 		return root == nil ? null : getMin(root).getKey();
 	}
@@ -55,6 +58,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return getMin(x.getLeft());
 	}
 
+	@Override
 	public K getMax() {
 		return root == nil ? null : getMax(root).getKey();
 	}
@@ -65,6 +69,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return getMin(x.getRight());
 	}
 
+	@Override
 	public K getPredecessor(K key) {
 		return search(root, key) != nil ? getPredecessor(search(root, key)).getKey() : null;
 	}
@@ -80,6 +85,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return y;
 	}
 
+	@Override
 	public K getSuccessor(K key) {
 		return search(root, key) != nil ? getSuccessor(search(root, key)).getKey() : null;
 	}
@@ -95,6 +101,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return y;
 	}
 
+	@Override
 	public void insert(K key, V value) {
 		RBNode<K, V> node = new RBNode<>(key, value, nil);
 		insert(node);
@@ -161,6 +168,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		root.setBlack(true);
 	}
 
+	@Override
 	public V delete(K key) {
 		RBNode<K, V> node = search(root, key);
 		if (node != nil) {
@@ -332,6 +340,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		x.setParent(y);
 	}
 	
+	@Override
 	public ArrayList<V> searchEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 		if (isInTree(key)) {
@@ -344,6 +353,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return array;
 	}
 
+	@Override
 	public ArrayList<V> searchLowerOrEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -357,6 +367,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return array;
 	}
 
+	@Override
 	public ArrayList<V> searchLowerTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -370,6 +381,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return array;
 	}
 	
+	@Override
 	public ArrayList<V> searchBiggerOrEqualThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -383,6 +395,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return array;
 	}
 	
+	@Override
 	public ArrayList<V> searchBiggerThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 

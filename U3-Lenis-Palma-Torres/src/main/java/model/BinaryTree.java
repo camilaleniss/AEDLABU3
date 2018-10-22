@@ -15,6 +15,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return root;
 	}
 
+	@Override
 	public K getMin() {
 		return root == null ? null : getMin(root).getKey();
 	}
@@ -25,6 +26,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return getMin(x.getLeft());
 	}
 
+	@Override
 	public K getMax() {
 		return root == null ? null : getMax(root).getKey();
 	}
@@ -35,6 +37,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return getMin(x.getRight());
 	}
 
+	@Override
 	public K getPredecessor(K key) {
 		return search(root, key) != null ? getPredecessor(search(root, key)).getKey() : null;
 	}
@@ -50,6 +53,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return y;
 	}
 
+	@Override
 	public K getSuccessor(K key) {
 		return search(root, key) != null ? getSuccessor(search(root, key)).getKey() : null;
 	}
@@ -77,11 +81,13 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return l + r + 1;
 	}
 
+	@Override
 	public V search(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
 		return node == null ? null : node.getValue();
 	}
 
+	@Override
 	public boolean isInTree(K key) {
 		return search(root, key) != null;
 	}
@@ -96,6 +102,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return search(node.getRight(), key);
 	}
 
+	@Override
 	public void insert(K key, V value) {
 		NodeBinaryTree<K, V> node = new NodeBinaryTree<>(key, value);
 		insert(node);
@@ -121,6 +128,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 
 	}
 
+	@Override
 	public V delete(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
 		return node != null ? delete(node).getValue() : null;
@@ -152,6 +160,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return y;
 	}
 
+	@Override
 	public ArrayList<V> searchEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 		if (isInTree(key)) {
@@ -164,6 +173,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return array;
 	}
 
+	@Override
 	public ArrayList<V> searchLowerOrEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -177,6 +187,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return array;
 	}
 
+	@Override
 	public ArrayList<V> searchLowerTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -190,6 +201,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return array;
 	}
 	
+	@Override
 	public ArrayList<V> searchBiggerOrEqualThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 
@@ -203,6 +215,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		return array;
 	}
 	
+	@Override
 	public ArrayList<V> searchBiggerThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
 

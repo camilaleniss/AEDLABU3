@@ -4,6 +4,15 @@ import java.io.*;
 
 public class Player {
 	
+	public static final int NAME = 2;
+	public static final int AGE = 3;
+	public static final int TEAM = 1;
+	public static final int PPG = 6;
+	public static final int RPG = 12;
+	public static final int APG = 13;
+	public static final int SPG = 14;
+	public static final int BPG = 15;
+				
 	private File location;
 	private String name;
 	private int age;
@@ -13,12 +22,25 @@ public class Player {
 	private double apg; //assists per game
 	private double spg; //steals per game
 	private double bpg; //blocks per game;
+	
+	public Player(File location, String name, int age, String team, double ppg, double rpg, double apg, double spg,
+			double bpg) {
+		super();
+		this.location = location;
+		this.name = name;
+		this.age = age;
+		this.team = team;
+		this.ppg = ppg;
+		this.rpg = rpg;
+		this.apg = apg;
+		this.spg = spg;
+		this.bpg = bpg;
+	}
+
 	public File getLocation() {
 		return location;
 	}
-	public void setLocation(File location) {
-		this.location = location;
-	}
+
 	public String getName() {
 		return name;
 	}
@@ -68,7 +90,38 @@ public class Player {
 		this.bpg = bpg;
 	}
 	
-	
+	public void modifyFile() {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(location, "UTF-8");
+			StringBuilder sb = new StringBuilder();
+			String[] info = new String[20];
+			for (int i = 0; i < info.length; i++) {
+				info[i] = "";
+			}
+			info[NAME]  = name;
+			info[AGE]  = ""+age;
+			info[TEAM]  = team;
+			info[PPG]  = ""+ppg;
+			info[RPG]  = ""+rpg;
+			info[APG]  = ""+apg;
+			info[SPG]  = ""+spg;
+			info[BPG]  = ""+bpg;
+
+			for (int i = 0; i < info.length; i++) {
+				sb.append(info[i]+",");
+			}
+			writer.println(sb.toString());
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 }
