@@ -55,6 +55,20 @@ class TestAVLTree {
 		AVL.delete(46);
 		assertTrue(AVL.getRoot().getKey()==12);
 		assertTrue(AVL.getRoot().getRight().getKey()==40);
+		//Test4
+		setup1();
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(30,1));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(19,2));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(40,3));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(45,19));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(46,19));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(12,1));
+		AVL.insert(new NodeBinaryTree<Integer, Integer>(7,2));
+		AVL.insert(new NodeBinaryTree<Integer,Integer>(18,1));
+		AVL.insert(new NodeBinaryTree<Integer,Integer> (17,1));
+		AVL.insert(new NodeBinaryTree<Integer,Integer> (13,19));
+		AVL.insert(new NodeBinaryTree<Integer,Integer>(16,1));
+		
 		
 	}
 
