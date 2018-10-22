@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
