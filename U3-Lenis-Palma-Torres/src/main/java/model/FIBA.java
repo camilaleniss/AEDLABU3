@@ -2,7 +2,6 @@ package model;
 
 import java.util.*;
 import java.io.*;
-import java.net.URL;
 
 public class FIBA {
 
