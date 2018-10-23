@@ -123,8 +123,8 @@ public class Player {
 	
 	@Override
 	public String toString() {
-		return name+" "+"/ "+team+"/ "+age+"/ "+" / "+ppg+"/ "+rpg+"/ "+
-				apg+"/ "+spg+"/ "+bpg+"/";
+		return "Name: "+name+" "+"/ Team: "+team+"/ Age: "+age+"/ Ppg: "+ppg+"/ Rpg: "+rpg+"/ Apg: "+
+				apg+"/ Spg: "+spg+"/ Bpg: "+bpg+"/";
 	}
 	
 

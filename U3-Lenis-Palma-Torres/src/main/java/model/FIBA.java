@@ -4,7 +4,14 @@ import java.util.*;
 import java.io.*;
 
 public class FIBA {
-
+	
+	public static final String LOCRPGBTS ="db"+File.separator+"trees"+File.separator+"rpgbts.txt";
+	public static final String LOCRPGRBT ="db"+File.separator+"trees"+File.separator+"rpgrbt.txt";
+	public static final String LOCAPGRBT ="db"+File.separator+"trees"+File.separator+"apgrbt.txt";
+	public static final String LOCSPGBTS ="db"+File.separator+"trees"+File.separator+"spgbts.txt";
+	public static final String LOCSPGAVL ="db"+File.separator+"trees"+File.separator+"spgavl.txt";
+	public static final String LOCBPGAVL ="db"+File.separator+"trees"+File.separator+"bpgavl.txt";
+	
 	public static final int NUMBER_OF_PLAYERS = 0;
 
 	public static final int LESS = 0;
@@ -328,6 +335,25 @@ public class FIBA {
 		bpgAVL.insert(player.getBpg(), value);
 	}
 	
+	/*
+	public void saveTrees() {
+		
+	}
+	
+	public void saveTree(String path) {
+		File file = new File(path);
+		if (file.exists()) 
+			file.delete();
+		else
+			ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream( file ) );
+			oos.writeObject(obj);
+			oos.close();
+			
+	}
+	
+	public void importTres() {
+		
+	}*/
 
 	public static void main(String[] args) {
 		new FIBA();
