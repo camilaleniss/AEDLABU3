@@ -114,13 +114,17 @@ public class Player {
 			writer.println(sb.toString());
 			writer.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public String toString() {
+		return name+" "+"/ "+team+"/ "+age+"/ "+" / "+ppg+"/ "+rpg+"/ "+
+				apg+"/ "+spg+"/ "+bpg+"/";
 	}
 	
 

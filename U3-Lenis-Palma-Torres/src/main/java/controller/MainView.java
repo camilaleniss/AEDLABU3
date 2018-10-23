@@ -23,13 +23,14 @@ public class MainView {
     private JFXTextField boxValue;
 
     @FXML
-    private JFXComboBox<?> boxCategory;
+    private JFXComboBox<String> boxCategory;
 
     @FXML
-    private JFXComboBox<?> boxType;
+    private JFXComboBox<String> boxType;
 
     @FXML
     private JFXButton butSearch1;
 
 }
+
 

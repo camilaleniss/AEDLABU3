@@ -16,7 +16,7 @@ public class FIBA {
 	private List<String> names;
 	private List<String> surnames;
 	private int maxNum; // Number of players loaded
-	private BinaryTree<Double, String> rpgBST;
+	private BinaryTree<Double, String> rpgBST; 
 	private RBTree<Double, String> rpgRBT;
 	private RBTree<Double, String> apgRBT;
 	private BinaryTree<Double, String> spgBST;
@@ -287,6 +287,11 @@ public class FIBA {
 
 		}
 	}
+	
+	public void deletePlayer (Player player) {
+		
+	}
+	
 
 	public static void main(String[] args) {
 		new FIBA();
