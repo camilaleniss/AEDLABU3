@@ -232,7 +232,6 @@ public class FIBA {
 		for (int i = 0; i < locations.size(); i++) {
 			players.add(createPlayer(locations.get(i)));
 		}
-
 		return players;
 	}
 
@@ -256,7 +255,6 @@ public class FIBA {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return p;
 	}
 
@@ -302,7 +300,33 @@ public class FIBA {
 		//IT CAN ALSO DELTE THE TXT FILE.
 	}
 	
+	public void modifyPlayer(Player player, String name, int age, String team, double ppg, double rpg, double apg, double spg,
+			double bpg) {
+		if (player.getName().equals(name)) player.setName(name);
+		if (player.getAge()==age) player.setAge(age);
+		if (player.getTeam().equals(team)) player.setTeam(team);
+		if (player.getPpg()==ppg) player.setPpg(ppg);
+		if (player.getRpg()==rpg) player.setRpg(rpg);
+		if (player.getSpg()==spg) player.setSpg(spg);
+		if (player.getBpg()==bpg) player.setBpg(bpg);
+		
+		player.modifyFile();
+		deletePlayer(player);
+		insertPlayer(player);
+	}
 	
+	public void insertPlayer (Player player) {
+		String value = player.getLocation().toString();
+		//Insert in BinaryTrees
+		rpgBST.insert(player.getRpg(), value);
+		spgBST.insert(player.getSpg(), value);
+		//Insert in RBTrees
+		rpgRBT.insert(player.getRpg(), value);
+		apgRBT.insert(player.getApg(), value);
+		//Insert in AVLTrees
+		spgAVL.insert(player.getSpg(), value);
+		bpgAVL.insert(player.getBpg(), value);
+	}
 	
 
 	public static void main(String[] args) {
