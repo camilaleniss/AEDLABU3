@@ -288,9 +288,16 @@ public class FIBA {
 		}
 	}
 	
-	public void deletePlayer (Player player) {
-		
+	public void deletePlayer (Player player) throws FileNotFoundException {
+		File file = player.getLocation();
+		if (file.exists() && file.isFile()) {
+			
+		}else {
+			throw new FileNotFoundException();
+		}
 	}
+	
+	
 	
 
 	public static void main(String[] args) {
