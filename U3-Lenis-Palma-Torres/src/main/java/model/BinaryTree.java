@@ -101,6 +101,21 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			return search(node.getLeft(), key);
 		return search(node.getRight(), key);
 	}
+	
+	public V search(K key, V value) {
+		NodeBinaryTree<K, V> node = search(root, key, value);
+		return node == null ? null : node.getValue();
+	}
+	
+	private NodeBinaryTree<K,V> search(NodeBinaryTree<K,V> node, K key, V value){
+		if (key == null)
+			return null;
+		if (node == null || key.equals(node.getKey()) && value.equals(node.getValue()))
+			return node;
+		if (key.compareTo(node.getKey()) < 0)
+			return search(node.getLeft(), key, value);
+		return search(node.getRight(), key, value);
+	}
 
 	@Override
 	public void insert(K key, V value) {
@@ -132,6 +147,12 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 	public V delete(K key) {
 		NodeBinaryTree<K, V> node = search(root, key);
 		return node != null ? delete(node).getValue() : null;
+	}
+	
+	@Override
+	public V delete(K key, V value) {
+		NodeBinaryTree<K,V> node = search(root, key, value);
+		return node!=null ? delete(node).getValue() : null;
 	}
 
 	protected NodeBinaryTree<K, V> delete(NodeBinaryTree<K, V> z) {
@@ -228,5 +249,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 
 		return array;
 	}
+	
+	
 
 }

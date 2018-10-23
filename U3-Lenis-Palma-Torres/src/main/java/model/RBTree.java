@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
@@ -47,6 +46,21 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		return search(node.getRight(), key);
 	}
 
+	public V search(K key, V value) {
+		RBNode<K, V> node = search(root, key, value);
+		return node == null ? null : node.getValue();
+	}
+	
+	private RBNode<K,V> search(RBNode<K,V> node, K key, V value){
+		if (key == null)
+			return null;
+		if (node == null || key.equals(node.getKey()) && value.equals(node.getValue()))
+			return node;
+		if (key.compareTo(node.getKey()) < 0)
+			return search(node.getLeft(), key, value);
+		return search(node.getRight(), key, value);
+	}
+	
 	@Override
 	public K getMin() {
 		return root == nil ? null : getMin(root).getKey();
@@ -173,6 +187,16 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> node = search(root, key);
 		if (node != nil) {
 			V value = node.getValue();
+			delete(node);
+			return value;
+		}
+		return null;
+	}
+	
+	@Override
+	public V delete(K key, V value) {
+		RBNode<K,V> node = search(root, key, value);
+		if (node != nil) {
 			delete(node);
 			return value;
 		}
@@ -408,5 +432,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		return array;
 	}
+	
+
 
 }

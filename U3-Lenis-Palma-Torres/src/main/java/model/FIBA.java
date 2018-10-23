@@ -266,7 +266,7 @@ public class FIBA {
 			br.readLine();
 			String line = br.readLine();
 			int i = 0;
-			while (i < 17163 && line != null && !line.equals("")) {
+			while (i < 3 && line != null && !line.equals("")) {
 				PrintWriter writer = new PrintWriter(
 						"db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
 				writer.println(line);
@@ -288,13 +288,18 @@ public class FIBA {
 		}
 	}
 	
-	public void deletePlayer (Player player) throws FileNotFoundException {
-		File file = player.getLocation();
-		if (file.exists() && file.isFile()) {
-			
-		}else {
-			throw new FileNotFoundException();
-		}
+	public void deletePlayer (Player player) {
+		String value = player.getLocation().toString();
+		//Delete from BinaryTrees
+		rpgBST.delete(player.getRpg(), value);
+		spgBST.delete(player.getSpg(), value);
+		//Delete from RBTrees
+		rpgRBT.delete(player.getRpg(), value);
+		apgRBT.delete(player.getApg(), value);
+		//Delete from AVLTrees
+		spgAVL.delete(player.getSpg(), value);
+		bpgAVL.delete(player.getBpg(), value);
+		//IT CAN ALSO DELTE THE TXT FILE.
 	}
 	
 	
