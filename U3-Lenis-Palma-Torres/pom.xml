@@ -69,7 +69,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										gui.Main
+										controller.Main
 									</mainClass>
 								</manifest>
 							</archive>
