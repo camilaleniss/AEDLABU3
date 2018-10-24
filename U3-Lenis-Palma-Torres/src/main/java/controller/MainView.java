@@ -50,7 +50,9 @@ public class MainView implements Initializable {
 	private JFXButton butNew;
 
 	private FIBA fiba;
-
+	
+	private Player player;
+	
 	@FXML
 	void delete(ActionEvent event) {
 
@@ -90,14 +92,22 @@ public class MainView implements Initializable {
 			JOptionPane.showMessageDialog(null, "You must enter a value", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (cat == Player.NAME || cat == Player.TEAM) {
-
+				ArrayList<Player> players = fiba.search(cat, 0, typ, true, boxValue.getText());
+				if(players.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No player meets the requirements");
+				} else {
+					openSearch(players);
+				}
 			} else {
 				try {
 					double value = Double.parseDouble(boxValue.getText());
 					ArrayList<Player> players = fiba.search(cat, value, typ, true, "");
-					JOptionPane.showMessageDialog(null, "oli");
-					JOptionPane.showMessageDialog(null, "oli2");
-					openSearch(players);
+					if(players.size() == 0) {
+						JOptionPane.showMessageDialog(null, "No player meets the requirements");
+					} else {
+						openSearch(players);
+					}
+					
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "You must enter a number", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -124,6 +134,11 @@ public class MainView implements Initializable {
 
 		boxType.setItems(listType);
 		boxType.getSelectionModel().select(2);
+	}
+	
+	public void init(Player player) {
+		System.out.println(player);
+		init();
 	}
 
 	private void openSearch(ArrayList<Player> players) {

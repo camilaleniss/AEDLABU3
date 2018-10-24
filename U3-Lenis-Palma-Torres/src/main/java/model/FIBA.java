@@ -4,14 +4,14 @@ import java.util.*;
 import java.io.*;
 
 public class FIBA {
-	
-	public static final String LOCRPGBTS ="db"+File.separator+"trees"+File.separator+"rpgbts.txt";
-	public static final String LOCRPGRBT ="db"+File.separator+"trees"+File.separator+"rpgrbt.txt";
-	public static final String LOCAPGRBT ="db"+File.separator+"trees"+File.separator+"apgrbt.txt";
-	public static final String LOCSPGBTS ="db"+File.separator+"trees"+File.separator+"spgbts.txt";
-	public static final String LOCSPGAVL ="db"+File.separator+"trees"+File.separator+"spgavl.txt";
-	public static final String LOCBPGAVL ="db"+File.separator+"trees"+File.separator+"bpgavl.txt";
-	
+
+	public static final String LOCRPGBTS = "db" + File.separator + "trees" + File.separator + "rpgbts.txt";
+	public static final String LOCRPGRBT = "db" + File.separator + "trees" + File.separator + "rpgrbt.txt";
+	public static final String LOCAPGRBT = "db" + File.separator + "trees" + File.separator + "apgrbt.txt";
+	public static final String LOCSPGBTS = "db" + File.separator + "trees" + File.separator + "spgbts.txt";
+	public static final String LOCSPGAVL = "db" + File.separator + "trees" + File.separator + "spgavl.txt";
+	public static final String LOCBPGAVL = "db" + File.separator + "trees" + File.separator + "bpgavl.txt";
+
 	public static final int NUMBER_OF_PLAYERS = 0;
 
 	public static final int LESS = 0;
@@ -23,7 +23,7 @@ public class FIBA {
 	private List<String> names;
 	private List<String> surnames;
 	private int maxNum; // Number of players loaded
-	private BinaryTree<Double, String> rpgBST; 
+	private BinaryTree<Double, String> rpgBST;
 	private RBTree<Double, String> rpgRBT;
 	private RBTree<Double, String> apgRBT;
 	private BinaryTree<Double, String> spgBST;
@@ -194,51 +194,100 @@ public class FIBA {
 
 	public ArrayList<Player> search(int item, double key, int criteria, boolean efficient, String keyStr) {
 		ArrayList<Player> players = new ArrayList<Player>();
-		IBinaryTree<Double, String> tree;
-		switch (item) {
-		case Player.RPG:
-			tree = efficient ? rpgRBT : rpgBST;
-			break;
-		case Player.APG:
-			tree = apgRBT;
-			break;
-		case Player.SPG:
-			tree = efficient ? spgAVL : spgBST;
-			break;
-		case Player.BPG:
-			tree = bpgAVL;
-			break;
-		default:
-			tree = efficient ? rpgRBT : rpgBST;
-			break;
+		if (item == Player.NAME || item == Player.AGE || item == Player.PPG) {
+			if (keyStr.equals("")) {
+				keyStr = item == Player.AGE ? "" + (int) key : "" + key;
+			}
+			players = searchLinear(item, criteria, keyStr);
+		} else {
+			IBinaryTree<Double, String> tree;
+			switch (item) {
+			case Player.RPG:
+				tree = efficient ? rpgRBT : rpgBST;
+				break;
+			case Player.APG:
+				tree = apgRBT;
+				break;
+			case Player.SPG:
+				tree = efficient ? spgAVL : spgBST;
+				break;
+			case Player.BPG:
+				tree = bpgAVL;
+				break;
+			default:
+				tree = efficient ? rpgRBT : rpgBST;
+				break;
+			}
+
+			ArrayList<String> locations = new ArrayList<String>();
+
+			switch (criteria) {
+			case LESS:
+				locations = tree.searchLowerTo(key);
+				break;
+			case LESS_EQUAL:
+				locations = tree.searchLowerOrEqualTo(key);
+				break;
+			case EQUAL:
+				locations = tree.searchEqualTo(key);
+				break;
+			case BIGGER_EQUAL:
+				locations = tree.searchBiggerOrEqualThan(key);
+				break;
+			case BIGGER:
+				locations = tree.searchBiggerThan(key);
+				break;
+			default:
+				locations = tree.searchEqualTo(key);
+				break;
+			}
+
+			for (int i = 0; i < locations.size(); i++) {
+				players.add(createPlayer(locations.get(i)));
+			}
+		}
+		return players;
+	}
+
+	private ArrayList<Player> searchLinear(int item, int criteria, String keyStr) {
+		ArrayList<Player> players = new ArrayList<>();
+
+		try {
+			for (int i = 1; i < maxNum; i++) {
+				File player = new File("db" + File.separator + "players" + File.separator + i + ".txt");
+				if (player.exists()) {
+					BufferedReader br = new BufferedReader(new FileReader(player));
+					String line = br.readLine();
+					String[] info = line.split(",");
+					boolean satisfies = false;
+					switch (criteria) {
+					case LESS:
+						satisfies = info[item].compareToIgnoreCase(keyStr) < 0;
+						break;
+					case LESS_EQUAL:
+						satisfies = info[item].compareToIgnoreCase(keyStr) <= 0;
+						break;
+					case EQUAL:
+						satisfies = info[item].compareToIgnoreCase(keyStr) == 0;
+						break;
+					case BIGGER_EQUAL:
+						satisfies = info[item].compareToIgnoreCase(keyStr) >= 0;
+						break;
+					case BIGGER:
+						satisfies = info[item].compareToIgnoreCase(keyStr) > 0;
+						break;
+					}
+					if (satisfies)
+						players.add(createPlayer(player.toString()));
+					br.close();
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		ArrayList<String> locations = new ArrayList<String>();
-
-		switch (criteria) {
-		case LESS:
-			locations = tree.searchLowerTo(key);
-			break;
-		case LESS_EQUAL:
-			locations = tree.searchLowerOrEqualTo(key);
-			break;
-		case EQUAL:
-			locations = tree.searchEqualTo(key);
-			break;
-		case BIGGER_EQUAL:
-			locations = tree.searchBiggerOrEqualThan(key);
-			break;
-		case BIGGER:
-			locations = tree.searchBiggerThan(key);
-			break;
-		default:
-			locations = tree.searchEqualTo(key);
-			break;
-		}
-		
-		for (int i = 0; i < locations.size(); i++) {
-			players.add(createPlayer(locations.get(i)));
-		}
 		return players;
 	}
 
@@ -292,68 +341,72 @@ public class FIBA {
 
 		}
 	}
-	
-	public void deletePlayer (Player player) {
+
+	public void deletePlayer(Player player) {
 		String value = player.getLocation().toString();
-		//Delete from BinaryTrees
+		// Delete from BinaryTrees
 		rpgBST.delete(player.getRpg(), value);
 		spgBST.delete(player.getSpg(), value);
-		//Delete from RBTrees
+		// Delete from RBTrees
 		rpgRBT.delete(player.getRpg(), value);
 		apgRBT.delete(player.getApg(), value);
-		//Delete from AVLTrees
+		// Delete from AVLTrees
 		spgAVL.delete(player.getSpg(), value);
 		bpgAVL.delete(player.getBpg(), value);
-		//IT CAN ALSO DELTE THE TXT FILE.
+		// IT CAN ALSO DELTE THE TXT FILE.
 	}
-	
-	public void modifyPlayer(Player player, String name, int age, String team, double ppg, double rpg, double apg, double spg,
-			double bpg) {
-		if (player.getName().equals(name)) player.setName(name);
-		if (player.getAge()==age) player.setAge(age);
-		if (player.getTeam().equals(team)) player.setTeam(team);
-		if (player.getPpg()==ppg) player.setPpg(ppg);
-		if (player.getRpg()==rpg) player.setRpg(rpg);
-		if (player.getSpg()==spg) player.setSpg(spg);
-		if (player.getBpg()==bpg) player.setBpg(bpg);
-		
+
+	public void modifyPlayer(Player player, String name, int age, String team, double ppg, double rpg, double apg,
+			double spg, double bpg) {
+		if (player.getName().equals(name))
+			player.setName(name);
+		if (player.getAge() == age)
+			player.setAge(age);
+		if (player.getTeam().equals(team))
+			player.setTeam(team);
+		if (player.getPpg() == ppg)
+			player.setPpg(ppg);
+		if (player.getRpg() == rpg)
+			player.setRpg(rpg);
+		if (player.getSpg() == spg)
+			player.setSpg(spg);
+		if (player.getBpg() == bpg)
+			player.setBpg(bpg);
+
 		player.modifyFile();
 		deletePlayer(player);
 		insertPlayer(player);
 	}
-	
-	public void insertPlayer (Player player) {
+
+	public void insertPlayer(Player player) {
 		String value = player.getLocation().toString();
-		//Insert in BinaryTrees
+		// Insert in BinaryTrees
 		rpgBST.insert(player.getRpg(), value);
 		spgBST.insert(player.getSpg(), value);
-		//Insert in RBTrees
+		// Insert in RBTrees
 		rpgRBT.insert(player.getRpg(), value);
 		apgRBT.insert(player.getApg(), value);
-		//Insert in AVLTrees
+		// Insert in AVLTrees
 		spgAVL.insert(player.getSpg(), value);
 		bpgAVL.insert(player.getBpg(), value);
 	}
-	
+
 	/*
-	public void saveTrees() {
-		
-	}
-	
-	public void saveTree(String path) {
-		File file = new File(path);
-		if (file.exists()) 
-			file.delete();
-		else
-			ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream( file ) );
-			oos.writeObject(obj);
-			oos.close();
-			
-	}
-	
-	public void importTres() {
-		
-	}*/
+	 * public void saveTrees() {
+	 * 
+	 * }
+	 * 
+	 * public void saveTree(String path) { File file = new File(path); if
+	 * (file.exists()) file.delete(); else ObjectOutputStream oos = new
+	 * ObjectOutputStream( new FileOutputStream( file ) ); oos.writeObject(obj);
+	 * oos.close();
+	 * 
+	 * }
+	 * 
+	 * public void importTres() {
+	 * 
+	 * }
+	 */
 
 	public static void main(String[] args) {
 		new FIBA();

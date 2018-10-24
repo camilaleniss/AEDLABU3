@@ -34,7 +34,7 @@ public class SearchController {
 			Stage stage = (Stage) butBack.getScene().getWindow();
 			stage.setScene(scene);
 			MainView contr = loader.getController();
-//			contr.init(listPlayers.getSelectionModel().getSelectedItem());
+			contr.init(listPlayers.getSelectionModel().getSelectedItem());
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
