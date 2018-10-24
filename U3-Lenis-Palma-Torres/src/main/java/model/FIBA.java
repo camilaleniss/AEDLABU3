@@ -378,6 +378,7 @@ public class FIBA {
 		spgAVL.delete(player.getSpg(), value);
 		bpgAVL.delete(player.getBpg(), value);
 		// IT CAN ALSO DELTE THE TXT FILE.
+		player.getLocation().delete();
 	}
 
 	public void modifyPlayer(Player player, String name, int age, String team, double ppg, double rpg, double apg,

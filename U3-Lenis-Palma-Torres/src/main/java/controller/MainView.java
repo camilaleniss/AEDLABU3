@@ -98,7 +98,10 @@ public class MainView implements Initializable {
 
 	@FXML
 	void delete(ActionEvent event) {
-
+		fiba.deletePlayer(player);
+		JOptionPane.showMessageDialog(null, name+" was successfully deleted");
+		player = null;
+		updatePlayer();
 	}
 
 	@FXML
