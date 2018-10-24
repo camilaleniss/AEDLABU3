@@ -108,7 +108,25 @@ public class MainView implements Initializable {
 
 	@FXML
 	void insert(ActionEvent event) {
-
+		if(txtName.getText().equals("") || txtTeam.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			try {
+				String name = txtName.getText();
+				int age = (int)Double.parseDouble(txtAge.getText());
+				String team = txtTeam.getText();
+				double ppg = Double.parseDouble(txtPpg.getText());
+				double rpg = Double.parseDouble(txtRpg.getText());
+				double apg = Double.parseDouble(txtApg.getText());
+				double spg = Double.parseDouble(txtSpg.getText());
+				double bpg = Double.parseDouble(txtBpg.getText());
+				fiba.addPlayer(name, age, team, ppg, rpg, apg, spg, bpg);
+				JOptionPane.showMessageDialog(null, name+" was successfully inserted");
+				updatePlayer();
+			} catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 	@FXML

@@ -402,7 +402,8 @@ public class FIBA {
 		insertPlayer(player);
 	}
 
-	public void insertPlayer(Player player) {
+	private void insertPlayer(Player player) {
+		player.modifyFile();
 		String value = player.getLocation().toString();
 		// Insert in BinaryTrees
 		rpgBST.insert(player.getRpg(), value);
@@ -413,6 +414,15 @@ public class FIBA {
 		// Insert in AVLTrees
 		spgAVL.insert(player.getSpg(), value);
 		bpgAVL.insert(player.getBpg(), value);
+	}
+
+	public void addPlayer(String name, int age, String team, double ppg, double rpg, double apg,
+			double spg, double bpg) {
+		File file = new File("db" + File.separator + "players" + File.separator + maxNum + ".txt");
+		maxNum++;
+		updateMaxNum();
+		Player player = new Player(file,name,age,team,ppg,rpg,apg,spg,bpg);
+		insertPlayer(player);
 	}
 
 	/*
