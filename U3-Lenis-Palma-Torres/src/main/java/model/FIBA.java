@@ -194,7 +194,7 @@ public class FIBA {
 
 	public ArrayList<Player> search(int item, double key, int criteria, boolean efficient, String keyStr) {
 		ArrayList<Player> players = new ArrayList<Player>();
-		if (item == Player.NAME || item == Player.AGE || item == Player.PPG) {
+		if (item == Player.NAME || item == Player.TEAM || item == Player.AGE || item == Player.PPG) {
 			if (keyStr.equals("")) {
 				keyStr = item == Player.AGE ? "" + (int) key : "" + key;
 			}
