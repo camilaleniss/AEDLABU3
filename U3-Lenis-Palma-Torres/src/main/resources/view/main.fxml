@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
@@ -91,14 +92,14 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXTextField prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <JFXTextField prefHeight="25.0" prefWidth="62.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <JFXTextField prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <JFXTextField prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <JFXTextField prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <JFXTextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="txtAge" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="txtTeam" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="txtPpg" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <JFXTextField fx:id="txtRpg" prefHeight="25.0" prefWidth="62.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <JFXTextField fx:id="txtApg" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="txtSpg" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="txtBpg" prefHeight="25.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
             </GridPane>
             <JFXButton fx:id="butNew" layoutX="284.0" layoutY="372.0" onAction="#newPlayer" prefHeight="33.0" prefWidth="51.0" style="-fx-background-color: #FF5C00;" text="New" />
@@ -113,8 +114,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="boxValue" layoutX="149.0" layoutY="172.0" prefHeight="25.0" prefWidth="100.0" />
-            <JFXComboBox fx:id="boxCategory" layoutX="97.0" layoutY="66.0" prefHeight="25.0" prefWidth="152.0" />
+            <JFXTextField fx:id="boxValue" layoutX="145.0" layoutY="172.0" prefHeight="25.0" prefWidth="100.0" />
+            <JFXComboBox fx:id="boxCategory" layoutX="97.0" layoutY="66.0" onAction="#catChange" prefHeight="25.0" prefWidth="152.0" />
             <Label layoutX="26.0" layoutY="115.0" text="Type:">
                <font>
                   <Font size="16.0" />
@@ -126,7 +127,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <JFXButton fx:id="butSearch" layoutX="127.0" layoutY="245.0" onAction="#search" prefHeight="35.0" prefWidth="68.0" style="-fx-background-color: #EA1A12;" text="Search" />
+            <JFXButton fx:id="butSearch" layoutX="127.0" layoutY="266.0" onAction="#search" prefHeight="35.0" prefWidth="68.0" style="-fx-background-color: #EA1A12;" text="Search" />
             <Label layoutX="26.0" layoutY="24.0" text="Search:" textFill="#ea1a12">
                <font>
                   <Font size="14.0" />
@@ -138,6 +139,7 @@
                </image>
             </ImageView>
             <Line endX="-14.0" endY="413.0" layoutX="14.0" layoutY="14.0" startX="-14.0" startY="3.0" stroke="#20456f" />
+            <JFXCheckBox fx:id="chkBalanced" layoutX="26.0" layoutY="222.0" text="Use balanced tree" />
          </children>
       </AnchorPane>
    </center>

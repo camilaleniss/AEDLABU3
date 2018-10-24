@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
@@ -21,6 +22,11 @@ import model.FIBA;
 import model.Player;
 
 public class MainView implements Initializable {
+
+	public static final int[] CATEGORIES = new int[] { Player.NAME, Player.AGE, Player.TEAM, Player.PPG, Player.RPG,
+			Player.APG, Player.SPG, Player.BPG };
+	public static final int[] TYPES = new int[] { FIBA.LESS, FIBA.LESS_EQUAL, FIBA.EQUAL, FIBA.BIGGER_EQUAL,
+			FIBA.BIGGER };
 
 	@FXML
 	private JFXButton butInsert;
@@ -49,10 +55,47 @@ public class MainView implements Initializable {
 	@FXML
 	private JFXButton butNew;
 
+	@FXML
+	private JFXCheckBox chkBalanced;
+	
+	@FXML
+    private JFXTextField txtName;
+
+    @FXML
+    private JFXTextField txtAge;
+
+    @FXML
+    private JFXTextField txtTeam;
+
+    @FXML
+    private JFXTextField txtPpg;
+
+    @FXML
+    private JFXTextField txtRpg;
+
+    @FXML
+    private JFXTextField txtApg;
+
+    @FXML
+    private JFXTextField txtSpg;
+
+    @FXML
+    private JFXTextField txtBpg;
+
 	private FIBA fiba;
-	
+
 	private Player player;
-	
+
+	@FXML
+	void catChange(ActionEvent event) {
+		int sel = boxCategory.getSelectionModel().getSelectedIndex();
+		int cat = CATEGORIES[sel == -1 ? 0 : sel];
+		boolean disabled = true;
+		if (cat == Player.RPG || cat == Player.SPG)
+			disabled = false;
+		chkBalanced.setDisable(disabled);
+	}
+
 	@FXML
 	void delete(ActionEvent event) {
 
@@ -72,28 +115,25 @@ public class MainView implements Initializable {
 	void modify(ActionEvent event) {
 
 	}
-	
-	@FXML
-    void newPlayer(ActionEvent event) {
 
-    }
+	@FXML
+	void newPlayer(ActionEvent event) {
+		player = null;
+		updatePlayer();
+	}
 
 	@FXML
 	void search(ActionEvent event) {
 
-		int[] categories = new int[] { Player.NAME, Player.AGE, Player.TEAM, Player.PPG, Player.RPG, Player.APG,
-				Player.SPG, Player.BPG };
-		int[] types = new int[] { FIBA.LESS, FIBA.LESS_EQUAL, FIBA.EQUAL, FIBA.BIGGER_EQUAL, FIBA.BIGGER };
-
-		int cat = categories[boxCategory.getSelectionModel().getSelectedIndex()];
-		int typ = types[boxType.getSelectionModel().getSelectedIndex()];
+		int cat = CATEGORIES[boxCategory.getSelectionModel().getSelectedIndex()];
+		int typ = TYPES[boxType.getSelectionModel().getSelectedIndex()];
 
 		if (boxValue.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must enter a value", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (cat == Player.NAME || cat == Player.TEAM) {
 				ArrayList<Player> players = fiba.search(cat, 0, typ, true, boxValue.getText());
-				if(players.size() == 0) {
+				if (players.size() == 0) {
 					JOptionPane.showMessageDialog(null, "No player meets the requirements");
 				} else {
 					openSearch(players);
@@ -101,13 +141,16 @@ public class MainView implements Initializable {
 			} else {
 				try {
 					double value = Double.parseDouble(boxValue.getText());
-					ArrayList<Player> players = fiba.search(cat, value, typ, true, "");
-					if(players.size() == 0) {
+					long t1 = System.currentTimeMillis();
+					ArrayList<Player> players = fiba.search(cat, value, typ, chkBalanced.isSelected(), "");
+					JOptionPane.showMessageDialog(null,
+							"The search took " + (System.currentTimeMillis() - t1) + " milliseconds");
+					if (players.size() == 0) {
 						JOptionPane.showMessageDialog(null, "No player meets the requirements");
 					} else {
 						openSearch(players);
 					}
-					
+
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "You must enter a number", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -118,14 +161,14 @@ public class MainView implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		fiba = new FIBA();
-		init();
-
+		init(null);
 	}
 
-	public void init() {
+	public void init(Player player) {
+		this.player = player;
 		ObservableList<String> listCat = FXCollections.observableArrayList("Name (linear)", "Age (linear)",
-				"Team (linear)", "Points per game (linear)", "Rebounds per game (efficient)",
-				"Assists per game (efficient)", "Steals per game (efficient)", "Blocks per game (efficient)");
+				"Team (linear)", "Points per game (linear)", "Rebounds per game (RB)", "Assists per game (RB)",
+				"Steals per game (AVL)", "Blocks per game (AVL)");
 
 		ObservableList<String> listType = FXCollections.observableArrayList("<", "<=", "=", ">=", ">");
 
@@ -134,11 +177,42 @@ public class MainView implements Initializable {
 
 		boxType.setItems(listType);
 		boxType.getSelectionModel().select(2);
+
+		chkBalanced.setSelected(true);
+		chkBalanced.setDisable(true);
+		updatePlayer();
 	}
-	
-	public void init(Player player) {
-		System.out.println(player);
-		init();
+
+
+	private void updatePlayer() {
+		if(player == null) {
+			butInsert.setDisable(false);
+			butModify.setDisable(true);
+			butDelete.setDisable(true);
+			butNew.setDisable(true);
+			txtName.setText("");
+			txtAge.setText("");
+			txtTeam.setText("");
+			txtPpg.setText("");
+			txtRpg.setText("");
+			txtApg.setText("");
+			txtSpg.setText("");
+			txtBpg.setText("");
+			
+		} else {
+			butInsert.setDisable(true);
+			butModify.setDisable(false);
+			butDelete.setDisable(false);
+			butNew.setDisable(false);
+			txtName.setText(player.getName());
+			txtAge.setText(""+player.getAge());
+			txtTeam.setText(""+player.getTeam());
+			txtPpg.setText(""+player.getPpg());
+			txtRpg.setText(""+player.getRpg());
+			txtApg.setText(""+player.getApg());
+			txtSpg.setText(""+player.getSpg());
+			txtBpg.setText(""+player.getBpg());
+		}		
 	}
 
 	private void openSearch(ArrayList<Player> players) {

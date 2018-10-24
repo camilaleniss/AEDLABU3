@@ -262,19 +262,43 @@ public class FIBA {
 					boolean satisfies = false;
 					switch (criteria) {
 					case LESS:
-						satisfies = info[item].compareToIgnoreCase(keyStr) < 0;
+						try {
+							satisfies = Double.parseDouble(info[item]) < Double.parseDouble(keyStr);
+						} catch (NumberFormatException e) {
+							satisfies = info[item].compareToIgnoreCase(keyStr) < 0;
+						}
 						break;
 					case LESS_EQUAL:
-						satisfies = info[item].compareToIgnoreCase(keyStr) <= 0;
+						try {
+							satisfies = Double.parseDouble(info[item]) <= Double.parseDouble(keyStr);
+						} catch (NumberFormatException e) {
+							satisfies = info[item].compareToIgnoreCase(keyStr) <= 0;
+						}
+
 						break;
 					case EQUAL:
-						satisfies = info[item].compareToIgnoreCase(keyStr) == 0;
+						try {
+							satisfies = Double.parseDouble(info[item]) == Double.parseDouble(keyStr);
+						} catch (NumberFormatException e) {
+							satisfies = info[item].compareToIgnoreCase(keyStr) == 0;
+						}
+
 						break;
 					case BIGGER_EQUAL:
-						satisfies = info[item].compareToIgnoreCase(keyStr) >= 0;
+						try {
+							satisfies = Double.parseDouble(info[item]) > Double.parseDouble(keyStr);
+						} catch (NumberFormatException e) {
+							satisfies = info[item].compareToIgnoreCase(keyStr) >= 0;
+						}
+
 						break;
 					case BIGGER:
-						satisfies = info[item].compareToIgnoreCase(keyStr) > 0;
+						try {
+							satisfies = Double.parseDouble(info[item]) >= Double.parseDouble(keyStr);
+						} catch (NumberFormatException e) {
+							satisfies = info[item].compareToIgnoreCase(keyStr) > 0;
+						}
+
 						break;
 					}
 					if (satisfies)
@@ -407,9 +431,4 @@ public class FIBA {
 	 * 
 	 * }
 	 */
-
-	public static void main(String[] args) {
-		new FIBA();
-	}
-
 }
