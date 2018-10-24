@@ -48,15 +48,15 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 	public V search(K key, V value) {
 		RBNode<K, V> node = search(root, key, value);
-		return node == null ? null : node.getValue();
+		return node == nil ? null : node.getValue();
 	}
 	
 	private RBNode<K,V> search(RBNode<K,V> node, K key, V value){
 		if (key == null)
-			return null;
-		if (node == null || key.equals(node.getKey()) && value.equals(node.getValue()))
+			return nil;
+		if (node == nil || key.equals(node.getKey()) && value.equals(node.getValue()))
 			return node;
-		if (key.compareTo(node.getKey()) < 0)
+		if (key.compareTo(node.getKey()) <= 0)
 			return search(node.getLeft(), key, value);
 		return search(node.getRight(), key, value);
 	}
@@ -126,7 +126,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> x = root;
 		while (x != nil) {
 			y = x;
-			if (z.getKey().compareTo(x.getKey()) < 0)
+			if (z.getKey().compareTo(x.getKey()) <= 0)
 				x = x.getLeft();
 			else
 				x = x.getRight();
@@ -134,7 +134,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		z.setParent(y);
 		if (y == nil)
 			root = z;
-		else if (z.getKey().compareTo(y.getKey()) < 0)
+		else if (z.getKey().compareTo(y.getKey()) <= 0)
 			y.setLeft(z);
 		else
 			y.setRight(z);
@@ -369,7 +369,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		ArrayList<V> array = new ArrayList<V>();
 		if (isInTree(key)) {
 			RBNode<K, V> node = search(root, key);
-			while (node != null && node.getKey() == key) {
+			while (node != nil && node.getKey().compareTo(key) == 0) {
 				array.add(node.getValue());
 				node = getPredecessor(node);
 			}
@@ -383,7 +383,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		RBNode<K, V> node = getMin(root);
 
-		while (node != null && node.getKey().compareTo(key) <= 0) {
+		while (node != nil && node.getKey().compareTo(key) <= 0) {
 			array.add(node.getValue());
 			node = getSuccessor(node);
 		}
@@ -397,7 +397,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		RBNode<K, V> node = getMin(root);
 
-		while (node != null && node.getKey().compareTo(key) < 0) {
+		while (node != nil && node.getKey().compareTo(key) < 0) {
 			array.add(node.getValue());
 			node = getSuccessor(node);
 		}
@@ -411,7 +411,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		RBNode<K, V> node = getMax(root);
 
-		while (node != null && node.getKey().compareTo(key) >= 0) {
+		while (node != nil && node.getKey().compareTo(key) >= 0) {
 			array.add(node.getValue());
 			node = getPredecessor(node);
 		}
@@ -425,7 +425,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		RBNode<K, V> node = getMax(root);
 
-		while (node != null && node.getKey().compareTo(key) > 0) {
+		while (node != nil && node.getKey().compareTo(key) > 0) {
 			array.add(node.getValue());
 			node = getPredecessor(node);
 		}

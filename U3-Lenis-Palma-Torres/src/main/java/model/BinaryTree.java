@@ -97,7 +97,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			return null;
 		if (node == null || key.equals(node.getKey()))
 			return node;
-		if (key.compareTo(node.getKey()) < 0)
+		if (key.compareTo(node.getKey()) <= 0)
 			return search(node.getLeft(), key);
 		return search(node.getRight(), key);
 	}
@@ -186,7 +186,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 		ArrayList<V> array = new ArrayList<V>();
 		if (isInTree(key)) {
 			NodeBinaryTree<K, V> node = search(root, key);
-			while (node != null && node.getKey() == key) {
+			while (node != null && node.getKey().compareTo(key) == 0) {
 				array.add(node.getValue());
 				node = getPredecessor(node);
 			}

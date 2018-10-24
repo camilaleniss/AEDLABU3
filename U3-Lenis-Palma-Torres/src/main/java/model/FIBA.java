@@ -192,7 +192,7 @@ public class FIBA {
 
 	}
 
-	public ArrayList<Player> search(int item, double key, int criteria, boolean efficient) {
+	public ArrayList<Player> search(int item, double key, int criteria, boolean efficient, String keyStr) {
 		ArrayList<Player> players = new ArrayList<Player>();
 		IBinaryTree<Double, String> tree;
 		switch (item) {
