@@ -61,7 +61,7 @@ public class FIBA {
 				createPlayers(players);
 			}
 
-			createTrees();
+			
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -72,6 +72,8 @@ public class FIBA {
 		loadNames();
 		loadSurnames();
 		createRandomPlayers();
+		
+		createTrees();
 
 	}
 
