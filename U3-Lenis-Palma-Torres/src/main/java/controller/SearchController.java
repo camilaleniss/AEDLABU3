@@ -46,6 +46,7 @@ public class SearchController {
     }
     
     public void init(ArrayList<Player> players, FIBA fiba){
+    	this.fiba = fiba;
     	ObservableList<Player> list = FXCollections.observableArrayList(players);
     	listPlayers.setItems(list);
     	listPlayers.getSelectionModel().select(0);
