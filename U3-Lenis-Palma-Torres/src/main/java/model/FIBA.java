@@ -12,7 +12,7 @@ public class FIBA {
 //	public static final String LOCSPGAVL = "db" + File.separator + "trees" + File.separator + "spgavl.txt";
 //	public static final String LOCBPGAVL = "db" + File.separator + "trees" + File.separator + "bpgavl.txt";
 
-	public static final int NUMBER_OF_PLAYERS = 0;
+	public static final int NUMBER_OF_PLAYERS = 200000;
 
 	public static final int LESS = 0;
 	public static final int LESS_EQUAL = 1;
