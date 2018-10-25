@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import model.FIBA;
 import model.Player;
 
-public class MainView implements Initializable {
+public class MainView implements Initializable{
 
 	public static final int[] CATEGORIES = new int[] { Player.NAME, Player.AGE, Player.TEAM, Player.PPG, Player.RPG,
 			Player.APG, Player.SPG, Player.BPG };
@@ -205,15 +205,9 @@ public class MainView implements Initializable {
 			}
 		}
 	}
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		fiba = new FIBA();
-		init(null);
-	}
-
-	public void init(Player player) {
-		this.player = player;
 		ObservableList<String> listCat = FXCollections.observableArrayList("Name (linear)", "Age (linear)",
 				"Team (linear)", "Points per game (linear)", "Rebounds per game (RB)", "Assists per game (RB)",
 				"Steals per game (AVL)", "Blocks per game (AVL)");
@@ -228,6 +222,14 @@ public class MainView implements Initializable {
 
 		chkBalanced.setSelected(true);
 		chkBalanced.setDisable(true);
+	}
+
+	public void init(Player player, FIBA fiba) {
+		if(fiba == null)
+			this.fiba = new FIBA();
+		else 
+			this.fiba = fiba;
+		this.player = player;
 		updatePlayer();
 	}
 
@@ -271,12 +273,14 @@ public class MainView implements Initializable {
 			Stage stage = (Stage) butSearch.getScene().getWindow();
 			stage.setScene(scene);
 			SearchController contr = loader.getController();
-			contr.init(players);
+			contr.init(players, fiba);
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }

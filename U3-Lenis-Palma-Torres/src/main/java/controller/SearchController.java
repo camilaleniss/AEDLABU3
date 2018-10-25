@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.FIBA;
 import model.Player;
 
 public class SearchController {
@@ -23,6 +24,8 @@ public class SearchController {
 
     @FXML
     private JFXListView<Player> listPlayers;
+    
+    private FIBA fiba;
 
     @FXML
     void back(ActionEvent event) {
@@ -34,7 +37,7 @@ public class SearchController {
 			Stage stage = (Stage) butBack.getScene().getWindow();
 			stage.setScene(scene);
 			MainView contr = loader.getController();
-			contr.init(listPlayers.getSelectionModel().getSelectedItem());
+			contr.init(listPlayers.getSelectionModel().getSelectedItem(), fiba);
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -42,7 +45,7 @@ public class SearchController {
 		}
     }
     
-    public void init(ArrayList<Player> players){
+    public void init(ArrayList<Player> players, FIBA fiba){
     	ObservableList<Player> list = FXCollections.observableArrayList(players);
     	listPlayers.setItems(list);
     	listPlayers.getSelectionModel().select(0);

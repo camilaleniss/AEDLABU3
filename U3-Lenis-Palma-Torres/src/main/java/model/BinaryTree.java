@@ -34,7 +34,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 	private NodeBinaryTree<K, V> getMax(NodeBinaryTree<K, V> x) {
 		if (x.getRight() == null)
 			return x;
-		return getMin(x.getRight());
+		return getMax(x.getRight());
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements IBinaryTree<K, V>
 			return null;
 		if (node == null || key.equals(node.getKey()) && value.equals(node.getValue()))
 			return node;
-		if (key.compareTo(node.getKey()) < 0)
+		if (key.compareTo(node.getKey()) <= 0)
 			return search(node.getLeft(), key, value);
 		return search(node.getRight(), key, value);
 	}

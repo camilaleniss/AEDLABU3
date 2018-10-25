@@ -12,16 +12,16 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		nil.setBlack(true);
 		root = nil;
 	}
-	
-	public RBNode<K,V> getRoot(){
+
+	public RBNode<K, V> getRoot() {
 		return root;
 	}
-	
-	public void setRoot(RBNode<K,V> root) {
-		this.root=root;
+
+	public void setRoot(RBNode<K, V> root) {
+		this.root = root;
 	}
-	
-	public RBNode<K,V> getNIL(){
+
+	public RBNode<K, V> getNIL() {
 		return nil;
 	}
 
@@ -41,7 +41,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			return nil;
 		if (node == nil || key.equals(node.getKey()))
 			return node;
-		if (key.compareTo(node.getKey()) < 0)
+		if (key.compareTo(node.getKey()) <= 0)
 			return search(node.getLeft(), key);
 		return search(node.getRight(), key);
 	}
@@ -50,8 +50,8 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> node = search(root, key, value);
 		return node == nil ? null : node.getValue();
 	}
-	
-	private RBNode<K,V> search(RBNode<K,V> node, K key, V value){
+
+	private RBNode<K, V> search(RBNode<K, V> node, K key, V value) {
 		if (key == null)
 			return nil;
 		if (node == nil || key.equals(node.getKey()) && value.equals(node.getValue()))
@@ -60,7 +60,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			return search(node.getLeft(), key, value);
 		return search(node.getRight(), key, value);
 	}
-	
+
 	@Override
 	public K getMin() {
 		return root == nil ? null : getMin(root).getKey();
@@ -80,7 +80,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 	private RBNode<K, V> getMax(RBNode<K, V> x) {
 		if (x.getRight() == nil)
 			return x;
-		return getMin(x.getRight());
+		return getMax(x.getRight());
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			y.setLeft(z);
 		else
 			y.setRight(z);
-		
+
 		insertFixup(z);
 
 	}
@@ -192,10 +192,10 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public V delete(K key, V value) {
-		RBNode<K,V> node = search(root, key, value);
+		RBNode<K, V> node = search(root, key, value);
 		if (node != nil) {
 			delete(node);
 			return value;
@@ -207,8 +207,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		RBNode<K, V> y = z;
 		RBNode<K, V> x = nil;
 //		boolean yOriginalColor = y.isBlack();
-		
-		
+
 		if (z.getLeft() == nil || z.getRight() == nil)
 			y = z;
 		else
@@ -218,7 +217,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		else
 			x = y.getRight();
 		x.setParent(y.getParent());
-		
+
 		if (y.getParent() == nil)
 			root = x;
 		else {
@@ -227,15 +226,14 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 			else
 				y.getParent().setRight(x);
 		}
-			
+
 		if (y != z) {
 			z.setKey(y.getKey());
 			z.setValue(y.getValue());
 		}
-		if(y.isBlack())
+		if (y.isBlack())
 			deleteFixup(x);
-		
-		
+
 //		if (z.getLeft() == nil) {
 //			x = z.getRight();
 //			transplant(z, z.getRight());
@@ -264,21 +262,20 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 	}
 
 	private void deleteFixup(RBNode<K, V> x) {
-		while(x != root && x.isBlack()){
-			if(x == x.getParent().getLeft()) {
+		while (x != root && x.isBlack()) {
+			if (x == x.getParent().getLeft()) {
 				RBNode<K, V> w = x.getParent().getRight();
-				if(!w.isBlack()) {
+				if (!w.isBlack()) {
 					w.setBlack(true);
 					x.getParent().setBlack(false);
 					leftRotate(x.getParent());
 					w = x.getParent().getRight();
 				}
-				if(w.getLeft().isBlack() && w.getRight().isBlack()) {
+				if (w.getLeft().isBlack() && w.getRight().isBlack()) {
 					w.setBlack(false);
 					x = x.getParent();
-				}
-				else {
-					if(w.getRight().isBlack()) {
+				} else {
+					if (w.getRight().isBlack()) {
 						w.getLeft().setBlack(true);
 						w.setBlack(false);
 						rightRotate(w);
@@ -292,18 +289,17 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 				}
 			} else {
 				RBNode<K, V> w = x.getParent().getLeft();
-				if(!w.isBlack()) {
+				if (!w.isBlack()) {
 					w.setBlack(true);
 					x.getParent().setBlack(false);
 					rightRotate(x.getParent());
 					w = x.getParent().getLeft();
 				}
-				if(w.getRight().isBlack() && w.getLeft().isBlack()) {
+				if (w.getRight().isBlack() && w.getLeft().isBlack()) {
 					w.setBlack(false);
 					x = x.getParent();
-				}
-				else {
-					if(w.getLeft().isBlack()) {
+				} else {
+					if (w.getLeft().isBlack()) {
 						w.getRight().setBlack(true);
 						w.setBlack(false);
 						leftRotate(w);
@@ -363,7 +359,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 		y.setRight(x); // put x on y’s right
 		x.setParent(y);
 	}
-	
+
 	@Override
 	public ArrayList<V> searchEqualTo(K key) {
 		ArrayList<V> array = new ArrayList<V>();
@@ -404,7 +400,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		return array;
 	}
-	
+
 	@Override
 	public ArrayList<V> searchBiggerOrEqualThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
@@ -418,7 +414,7 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		return array;
 	}
-	
+
 	@Override
 	public ArrayList<V> searchBiggerThan(K key) {
 		ArrayList<V> array = new ArrayList<V>();
@@ -432,7 +428,5 @@ public class RBTree<K extends Comparable<K>, V> implements IRBTree<K, V> {
 
 		return array;
 	}
-	
-
 
 }

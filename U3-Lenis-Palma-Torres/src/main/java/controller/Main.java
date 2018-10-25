@@ -15,11 +15,15 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception { 
 
-		Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/main.fxml"));
+		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("FIBA");
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/baloncesto.png")));
+		MainView contr = loader.getController();
+		contr.init(null, null);
 		primaryStage.show();
 	}
 	
