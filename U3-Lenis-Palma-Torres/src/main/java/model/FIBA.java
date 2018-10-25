@@ -369,7 +369,7 @@ public class FIBA {
 					.equals(new File(getClass().getResource("/info/nba_season_data.csv").getFile()).toString())) {
 				line = br.readLine();
 				int i = 0;
-				while (i < 3 && line != null && !line.equals("")) {
+				while (i < 16000 && line != null && !line.equals("")) {
 					PrintWriter writer = new PrintWriter(
 							"db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
 					writer.println(line);
