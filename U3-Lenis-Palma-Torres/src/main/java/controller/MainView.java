@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.FIBA;
 import model.Player;
@@ -57,30 +60,30 @@ public class MainView implements Initializable {
 
 	@FXML
 	private JFXCheckBox chkBalanced;
-	
+
 	@FXML
-    private JFXTextField txtName;
+	private JFXTextField txtName;
 
-    @FXML
-    private JFXTextField txtAge;
+	@FXML
+	private JFXTextField txtAge;
 
-    @FXML
-    private JFXTextField txtTeam;
+	@FXML
+	private JFXTextField txtTeam;
 
-    @FXML
-    private JFXTextField txtPpg;
+	@FXML
+	private JFXTextField txtPpg;
 
-    @FXML
-    private JFXTextField txtRpg;
+	@FXML
+	private JFXTextField txtRpg;
 
-    @FXML
-    private JFXTextField txtApg;
+	@FXML
+	private JFXTextField txtApg;
 
-    @FXML
-    private JFXTextField txtSpg;
+	@FXML
+	private JFXTextField txtSpg;
 
-    @FXML
-    private JFXTextField txtBpg;
+	@FXML
+	private JFXTextField txtBpg;
 
 	private FIBA fiba;
 
@@ -99,24 +102,30 @@ public class MainView implements Initializable {
 	@FXML
 	void delete(ActionEvent event) {
 		fiba.deletePlayer(player);
-		JOptionPane.showMessageDialog(null, name+" was successfully deleted");
+		JOptionPane.showMessageDialog(null, player.getName() + " was successfully deleted");
 		player = null;
 		updatePlayer();
 	}
 
 	@FXML
 	void importCSV(ActionEvent event) {
-
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("CSV", "*.csv"));
+		File file = fc.showOpenDialog((Stage) butImport.getScene().getWindow());
+		if (file != null) {
+			fiba.createPlayers(file);
+			JOptionPane.showMessageDialog(null, "The players were successfully imported");
+		}
 	}
 
 	@FXML
 	void insert(ActionEvent event) {
-		if(txtName.getText().equals("") || txtTeam.getText().equals("")) {
+		if (txtName.getText().equals("") || txtTeam.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {
 			try {
 				String name = txtName.getText();
-				int age = (int)Double.parseDouble(txtAge.getText());
+				int age = (int) Double.parseDouble(txtAge.getText());
 				String team = txtTeam.getText();
 				double ppg = Double.parseDouble(txtPpg.getText());
 				double rpg = Double.parseDouble(txtRpg.getText());
@@ -124,9 +133,9 @@ public class MainView implements Initializable {
 				double spg = Double.parseDouble(txtSpg.getText());
 				double bpg = Double.parseDouble(txtBpg.getText());
 				fiba.addPlayer(name, age, team, ppg, rpg, apg, spg, bpg);
-				JOptionPane.showMessageDialog(null, name+" was successfully inserted");
+				JOptionPane.showMessageDialog(null, name + " was successfully inserted");
 				updatePlayer();
-			} catch(NumberFormatException e){
+			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -134,7 +143,25 @@ public class MainView implements Initializable {
 
 	@FXML
 	void modify(ActionEvent event) {
-
+		if (txtName.getText().equals("") || txtTeam.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			try {
+				String name = txtName.getText();
+				int age = (int) Double.parseDouble(txtAge.getText());
+				String team = txtTeam.getText();
+				double ppg = Double.parseDouble(txtPpg.getText());
+				double rpg = Double.parseDouble(txtRpg.getText());
+				double apg = Double.parseDouble(txtApg.getText());
+				double spg = Double.parseDouble(txtSpg.getText());
+				double bpg = Double.parseDouble(txtBpg.getText());
+				fiba.modifyPlayer(player, name, age, team, ppg, rpg, apg, spg, bpg);
+				JOptionPane.showMessageDialog(null, name + " was successfully modified");
+				updatePlayer();
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "You must enter valid values", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 	@FXML
@@ -204,9 +231,8 @@ public class MainView implements Initializable {
 		updatePlayer();
 	}
 
-
 	private void updatePlayer() {
-		if(player == null) {
+		if (player == null) {
 			butInsert.setDisable(false);
 			butModify.setDisable(true);
 			butDelete.setDisable(true);
@@ -219,21 +245,21 @@ public class MainView implements Initializable {
 			txtApg.setText("");
 			txtSpg.setText("");
 			txtBpg.setText("");
-			
+
 		} else {
 			butInsert.setDisable(true);
 			butModify.setDisable(false);
 			butDelete.setDisable(false);
 			butNew.setDisable(false);
 			txtName.setText(player.getName());
-			txtAge.setText(""+player.getAge());
-			txtTeam.setText(""+player.getTeam());
-			txtPpg.setText(""+player.getPpg());
-			txtRpg.setText(""+player.getRpg());
-			txtApg.setText(""+player.getApg());
-			txtSpg.setText(""+player.getSpg());
-			txtBpg.setText(""+player.getBpg());
-		}		
+			txtAge.setText("" + player.getAge());
+			txtTeam.setText("" + player.getTeam());
+			txtPpg.setText("" + player.getPpg());
+			txtRpg.setText("" + player.getRpg());
+			txtApg.setText("" + player.getApg());
+			txtSpg.setText("" + player.getSpg());
+			txtBpg.setText("" + player.getBpg());
+		}
 	}
 
 	private void openSearch(ArrayList<Player> players) {

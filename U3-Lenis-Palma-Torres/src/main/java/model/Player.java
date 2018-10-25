@@ -127,5 +127,4 @@ public class Player {
 				apg+"/ Spg: "+spg+"/ Bpg: "+bpg+"/";
 	}
 	
-
 }

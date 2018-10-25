@@ -5,12 +5,12 @@ import java.io.*;
 
 public class FIBA {
 
-	public static final String LOCRPGBTS = "db" + File.separator + "trees" + File.separator + "rpgbts.txt";
-	public static final String LOCRPGRBT = "db" + File.separator + "trees" + File.separator + "rpgrbt.txt";
-	public static final String LOCAPGRBT = "db" + File.separator + "trees" + File.separator + "apgrbt.txt";
-	public static final String LOCSPGBTS = "db" + File.separator + "trees" + File.separator + "spgbts.txt";
-	public static final String LOCSPGAVL = "db" + File.separator + "trees" + File.separator + "spgavl.txt";
-	public static final String LOCBPGAVL = "db" + File.separator + "trees" + File.separator + "bpgavl.txt";
+//	public static final String LOCRPGBTS = "db" + File.separator + "trees" + File.separator + "rpgbts.txt";
+//	public static final String LOCRPGRBT = "db" + File.separator + "trees" + File.separator + "rpgrbt.txt";
+//	public static final String LOCAPGRBT = "db" + File.separator + "trees" + File.separator + "apgrbt.txt";
+//	public static final String LOCSPGBTS = "db" + File.separator + "trees" + File.separator + "spgbts.txt";
+//	public static final String LOCSPGAVL = "db" + File.separator + "trees" + File.separator + "spgavl.txt";
+//	public static final String LOCBPGAVL = "db" + File.separator + "trees" + File.separator + "bpgavl.txt";
 
 	public static final int NUMBER_OF_PLAYERS = 0;
 
@@ -164,11 +164,12 @@ public class FIBA {
 	public void createRandomPlayers() {
 		while (maxNum <= NUMBER_OF_PLAYERS) {
 			PrintWriter writer;
+			File location = new File("db" + File.separator + "players" + File.separator + maxNum + ".txt");
 			try {
-				writer = new PrintWriter("db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
+				writer = new PrintWriter(location, "UTF-8");
 				String name = names.get((int) (Math.random() * names.size())).toUpperCase();
 				String surname = surnames.get((int) (Math.random() * surnames.size())).toUpperCase();
-				writer.println(name + " " + surname);
+				writer.println(randomInfo(name + " " + surname));
 				maxNum++;
 				updateMaxNum();
 				writer.close();
@@ -177,6 +178,28 @@ public class FIBA {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private String randomInfo(String name) {
+		StringBuilder sb = new StringBuilder();
+		String[] info = new String[20];
+		for (int i = 0; i < info.length; i++) {
+			info[i] = "";
+		}
+		info[Player.NAME] = name;
+		info[Player.AGE] = "" + (int) (18 + Math.random() * 16);
+		info[Player.TEAM] = "" + (char) (Math.random() * 26 + 'A') + (char) (Math.random() * 26 + 'A')
+				+ (char) (Math.random() * 26 + 'A');
+		info[Player.PPG] = "" + String.format(Locale.US,"%.1f", (Math.random() * 15 + 4));
+		info[Player.RPG] = "" + String.format(Locale.US,"%.1f", (Math.random() * 15 + 1));
+		info[Player.APG] = "" + String.format(Locale.US,"%.1f", (Math.random() * 15 + 1));
+		info[Player.SPG] = "" + String.format(Locale.US,"%.1f", (Math.random() * 4));
+		info[Player.BPG] = "" + String.format(Locale.US,"%.1f", (Math.random() * 3));
+
+		for (int i = 0; i < info.length; i++) {
+			sb.append(info[i] + ",");
+		}
+		return sb.toString();
 	}
 
 	public void updateMaxNum() {
@@ -341,18 +364,32 @@ public class FIBA {
 	public void createPlayers(File players) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(players));
-			br.readLine();
 			String line = br.readLine();
-			int i = 0;
-			while (i < 3 && line != null && !line.equals("")) {
-				PrintWriter writer = new PrintWriter(
-						"db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
-				writer.println(line);
-				maxNum++;
-				updateMaxNum();
+			if (players.toString()
+					.equals(new File(getClass().getResource("/info/nba_season_data.csv").getFile()).toString())) {
 				line = br.readLine();
-				writer.close();
-				i++;
+				int i = 0;
+				while (i < 3 && line != null && !line.equals("")) {
+					PrintWriter writer = new PrintWriter(
+							"db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
+					writer.println(line);
+					maxNum++;
+					updateMaxNum();
+					line = br.readLine();
+					writer.close();
+					i++;
+				}
+			} else {
+				while(line != null && !line.equals("")) {
+					PrintWriter writer = new PrintWriter(
+							"db" + File.separator + "players" + File.separator + maxNum + ".txt", "UTF-8");
+					writer.println(randomInfo(line.split(",")[0]));
+					maxNum++;
+					updateMaxNum();
+					line = br.readLine();
+					writer.close();
+				}
+				createTrees();
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
@@ -383,20 +420,20 @@ public class FIBA {
 
 	public void modifyPlayer(Player player, String name, int age, String team, double ppg, double rpg, double apg,
 			double spg, double bpg) {
-		if (player.getName().equals(name))
-			player.setName(name);
-		if (player.getAge() == age)
-			player.setAge(age);
-		if (player.getTeam().equals(team))
-			player.setTeam(team);
-		if (player.getPpg() == ppg)
-			player.setPpg(ppg);
-		if (player.getRpg() == rpg)
-			player.setRpg(rpg);
-		if (player.getSpg() == spg)
-			player.setSpg(spg);
-		if (player.getBpg() == bpg)
-			player.setBpg(bpg);
+//		if (player.getName().equals(name))
+		player.setName(name);
+//		if (player.getAge() == age)
+		player.setAge(age);
+//		if (player.getTeam().equals(team))
+		player.setTeam(team);
+//		if (player.getPpg() == ppg)
+		player.setPpg(ppg);
+//		if (player.getRpg() == rpg)
+		player.setRpg(rpg);
+//		if (player.getSpg() == spg)
+		player.setSpg(spg);
+//		if (player.getBpg() == bpg)
+		player.setBpg(bpg);
 
 		player.modifyFile();
 		deletePlayer(player);
@@ -417,12 +454,12 @@ public class FIBA {
 		bpgAVL.insert(player.getBpg(), value);
 	}
 
-	public void addPlayer(String name, int age, String team, double ppg, double rpg, double apg,
-			double spg, double bpg) {
+	public void addPlayer(String name, int age, String team, double ppg, double rpg, double apg, double spg,
+			double bpg) {
 		File file = new File("db" + File.separator + "players" + File.separator + maxNum + ".txt");
 		maxNum++;
 		updateMaxNum();
-		Player player = new Player(file,name,age,team,ppg,rpg,apg,spg,bpg);
+		Player player = new Player(file, name, age, team, ppg, rpg, apg, spg, bpg);
 		insertPlayer(player);
 	}
 
