@@ -16,15 +16,16 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception { 
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/main.fxml"));
+		loader.setLocation(getClass().getResource("/view/loading.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("FIBA");
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/baloncesto.png")));
-		MainView contr = loader.getController();
-		contr.init(null, null);
+		LoadingController contr = loader.getController();
 		primaryStage.show();
+		contr.init();
+		
 	}
 	
 	public static void main(String[] args) {
