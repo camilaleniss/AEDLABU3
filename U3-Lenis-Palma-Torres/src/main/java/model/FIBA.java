@@ -309,7 +309,7 @@ public class FIBA {
 						break;
 					case BIGGER_EQUAL:
 						try {
-							satisfies = Double.parseDouble(info[item]) > Double.parseDouble(keyStr);
+							satisfies = Double.parseDouble(info[item]) >= Double.parseDouble(keyStr);
 						} catch (NumberFormatException e) {
 							satisfies = info[item].compareToIgnoreCase(keyStr) >= 0;
 						}
@@ -317,7 +317,7 @@ public class FIBA {
 						break;
 					case BIGGER:
 						try {
-							satisfies = Double.parseDouble(info[item]) >= Double.parseDouble(keyStr);
+							satisfies = Double.parseDouble(info[item]) > Double.parseDouble(keyStr);
 						} catch (NumberFormatException e) {
 							satisfies = info[item].compareToIgnoreCase(keyStr) > 0;
 						}
